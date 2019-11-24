@@ -1,0 +1,4 @@
+.App__header{
+    display: flex;
+    flex-direction: columns;
+}
