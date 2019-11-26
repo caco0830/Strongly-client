@@ -19,6 +19,10 @@ export default class Nav extends React.Component{
         this.setState({menuOpen: open});
     }
 
+    handleLinkClick = () => {
+        this.setState({menuOpen: false});
+    }
+
     // determines which menu will be render depending on if the user is logged in or not
     renderMenu(){
         return TokenService.hasAuthToken() ? this.renderLogoutLink() : this.renderLoginLink();
@@ -28,11 +32,13 @@ export default class Nav extends React.Component{
         return (
             <div className='Header__menu-items'>
                 <Link
-                    to='/register'>
+                    to='/register'
+                    onClick={this.handleLinkClick}>
                         Register
                 </Link>
                 <Link
-                    to='/login'>
+                    to='/login'
+                    onClick={this.handleLinkClick}>
                         Login
                 </Link>
             </div>
@@ -43,11 +49,13 @@ export default class Nav extends React.Component{
         return (
             <div className='Header__menu-items'>
                 <Link
-                    to='/'>
+                    to='/'
+                    onClick={this.handleLinkClick}>
                         Home
                 </Link>
                 <Link
-                    to='/logout'>
+                    to='/logout'
+                    onClick={this.handleLinkClick}>
                         Log out
                 </Link>
             </div>
@@ -58,7 +66,7 @@ export default class Nav extends React.Component{
         return(
             <div>
                 <nav className='Header'>
-                        <Link to='/'>
+                        <Link to='/' onClick={this.handleLinkClick}>
                             <h1>Strongly</h1>
                         </Link>
                     

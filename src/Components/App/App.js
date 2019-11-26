@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegistrationForm from '../RegistrationForm/RegistrationForm';
 
 class App extends Component{
   
@@ -18,15 +21,20 @@ class App extends Component{
               path={'/'}
               component={LandingPage}
             />
-  
-  
+            <Route
+              exact
+              path={'/login'}
+              component={LoginPage}
+            />
+            <Route
+              exact
+              path={'/register'}
+              component={RegistrationForm}
+            />
           </Switch>
         </main>
-  
-  
-  
+        <Footer />
       </div>
-      
     );
   }
 }
