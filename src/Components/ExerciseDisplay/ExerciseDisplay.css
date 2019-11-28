@@ -1,0 +1,14 @@
+.ExerciseDisplay{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.ExerciseDisplay__headers, .ExerciseDisplay__exercise{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+

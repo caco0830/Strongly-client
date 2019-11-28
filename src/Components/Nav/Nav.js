@@ -32,6 +32,11 @@ export default class Nav extends React.Component{
         return (
             <div className='Header__menu-items'>
                 <Link
+                    to='/home'
+                    onClick={this.handleLinkClick}>
+                        Home
+                </Link>
+                <Link
                     to='/register'
                     onClick={this.handleLinkClick}>
                         Register

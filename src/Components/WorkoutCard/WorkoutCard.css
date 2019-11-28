@@ -1,0 +1,32 @@
+.workout__card{
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: column;
+    background-color: lightgrey;
+    border-radius: 4px;
+    max-width: 400px;
+    margin: auto;
+    min-height: 100px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    padding: 10px;
+    text-align: left;
+    text-decoration: none;
+}
+
+.workout__card-date{
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.workout__card header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+a.workout__card-link{
+    text-decoration: none;
+    color: black;
+}
+
