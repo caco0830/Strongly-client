@@ -1,11 +1,21 @@
 
-table {
+
+.AddNew__sets-headers{
+    max-width: 400px;
     margin: auto;
-    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
-.new {
-    display: block;
-    margin: 20px auto;
+.AddNew__sets-entry{
+    margin: auto;
+    max-width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 
+.AddNew__sets-entry input{
+    width: 70px;
 }

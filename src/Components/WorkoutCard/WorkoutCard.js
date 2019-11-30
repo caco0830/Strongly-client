@@ -13,7 +13,7 @@ class WorkoutCard extends React.Component{
                 <div className="WorkoutCard">
                     <header>
                         <div className="WorkoutCard__name">{workout.name}</div>
-                        <div className="WorkoutCard__date">{format(workout.createdDate, 'MMM d')}</div>
+                        <div className="WorkoutCard__date">{workout.createdDate ? format(workout.createdDate, 'MMM d') : ''}</div>
                     </header>
                     <ExerciseDisplay workoutId={workout.id} />
                 </div>

@@ -11,6 +11,14 @@ class WorkoutPage extends React.Component{
     workout: []
   }
 
+  handleDelete = (e) => {
+    e.preventDefault();
+    const workoutId = this.props.match.params.workoutId;
+    this.context.deleteWorkout(workoutId);
+    this.props.history.push('/home');
+
+  }
+
 
 
   render(){
@@ -47,9 +55,9 @@ class WorkoutPage extends React.Component{
             )
           })}
         </div>
-        {/* <Link to={`/${workoutId}/edit`}><button>Edit</button></Link> */}
+        <Link to={`/${workoutId}/edit`}><button>Edit</button></Link>
         
-        <button>Delete</button>
+        <button type='button' onClick={this.handleDelete}>Delete</button>
       </div>);
   }
 }

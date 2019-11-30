@@ -4,5 +4,8 @@ export default React.createContext({
     workouts: [],
     exercises: [],
     sets: [],
-    addWorkout: () => {}
+    addWorkout: () => {},
+    addExercise: () => {},
+    addSet: () => {},
+    deleteWorkout: () => {}
 });

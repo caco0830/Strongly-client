@@ -28,7 +28,7 @@ class App extends Component{
   }
 
   handleAddWorkout = workout => {
-    this.state({
+    this.setState({
       workouts: [
         ...this.state.workouts,
         workout
@@ -36,11 +36,39 @@ class App extends Component{
     });
   }
 
+  handleAddExercise = exercises => {
+    this.setState({
+      exercises: [
+        ...this.state.exercises,
+        ...exercises
+      ]
+    });
+  }
+
+  handleAddSets = sets => {
+    this.setState({
+      sets: [
+        ...this.state.sets,
+        ...sets
+      ]
+    });
+  }
+
+  handleDeleteWorkout = workoutId => {
+    this.setState({
+      workouts: this.state.workouts.filter(workout => workout.id !== workoutId)
+    });
+  }
+
   render(){
     const value = {
       workouts: this.state.workouts,
       exercises: this.state.exercises,
-      sets: this.state.sets
+      sets: this.state.sets,
+      addWorkout: this.handleAddWorkout,
+      addExercise: this.handleAddExercise,
+      addSet: this.handleAddSets,
+      deleteWorkout: this.handleDeleteWorkout
     }
 
     return (

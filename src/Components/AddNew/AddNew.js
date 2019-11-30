@@ -1,153 +1,183 @@
 import React, { Component } from 'react';
-//import AddSet from '../AddSet/AddSet';
+import AppContext from '../../AppContext';
 import './AddNew.css';
 import uuid from 'uuid/v4';
 
 class AddNew extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            "error": null,
-            "date": "",
-            "exercise": "",
-            "numSets": "",
-            //"sets": [{order:"", reps:"", weight:""}],
+  static contextType = AppContext;
 
-
-            "id": uuid(),
-            "createdDate": "",
-            "name":"",
-            "user_id":"",
-            "exercises": [{id: '', workout_id: '', name: '', user_id: '1'}],
-            "sets":[{order:"", reps:"", weight:""}]
-
-
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      "error": null,
+      "workout_id": uuid(),
+      "name": "",
+      "user_id": "",
+      "exercises": [],
+      "sets": []
     }
+  }
 
-    nameChange(name){
-        this.setState({
-            name
-        });
-    }
+  nameChange(name) {
+    this.setState({
+      name
+    });
+  }
 
-    exerciseChanged(exercise) {
-        this.setState({
-            exercise
-        });
-    }
+  updateExerciseName(name, index) {
+    const exercises = this.state.exercises;
+    exercises[index].name = name;
 
-    setsChanged(numSets){
-        this.setState({
-            numSets
-        });
-    }
+    this.setState({
+      exercises: exercises
+    });
+  }
 
-    dateChanged(date){
-        this.setState({
-            date
-        })
-    }
-
+  updateSetWeight(weight, id, index){
+    const sets = this.state.sets;
+    sets[sets.findIndex(set => set.id === id)].weight = weight;
     
+ 
+    sets[sets.findIndex(set => set.id === id)].set_number = index+1;
 
-    addSet = (e) => {
-        this.setState((prevState) => ({
-            sets: [...prevState.sets, {order:"", reps:"", weight:""}]
-        }))
+    this.setState({
+      sets: sets
+    });
+  }
+
+  updateSetReps(reps, id){
+    const sets = this.state.sets;
+    sets[sets.findIndex(set => set.id === id)].reps = reps;
+
+    this.setState({
+      sets: sets
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const workout = {
+      id: this.state.workout_id,
+      name: e.target.name.value,
+      createdDate: new Date(),
+      user_id: 1
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
+    this.setState({
+      error: null
+    });
 
-        const name = e.target.name.value;
-        const workout = {
-            name: name
+    this.context.addWorkout(workout);
+    this.context.addExercise(this.state.exercises);
+    this.context.addSet(this.state.sets);
+    this.props.history.push('/home');
+  }
+
+  handleCancel = (e) => {
+    this.props.history.push('/home');
+  }
+
+  addExercise = (e) => {
+
+    e.preventDefault();
+    this.setState({
+      exercises: [
+        ...this.state.exercises,
+        { id: uuid(), workout_id: this.state.workout_id, name: '', user_id: '1' }
+      ]
+    });
+  }
+
+  addSet = (e) => {
+    e.preventDefault();
+    const exerciseid = e.target.dataset.exerciseid
+    this.setState({
+      sets: [
+        ...this.state.sets,
+        { id:uuid(), set_number: "", reps: "", weight: "", exercise_id:exerciseid }
+      ]
+    });
+  }
+
+  renderExercises(exercises) {
+    const sets = this.state.sets;
+    return (
+      <div className='AddNew__exercises-list'>
+        {exercises.map((ex, index) => {
+          return (
+            <div key={`ex-${index}`} className='AddNew__exercises-entry'>
+              <label htmlFor='exercise-name'>Exercise Name: </label>
+              <input
+                placeholder='Squat'
+                type="text"
+                name='exercise-name'
+                onChange={e => this.updateExerciseName(e.target.value, index)}
+              />
+              {this.renderSets(sets, ex.id)}
+            </div>
+          );
+        })}
+        <button onClick={this.addExercise}>+ Add Exercise</button>
+      </div>
+    );
+  }
+
+  renderSets(sets, exerciseId) {
+    sets = sets.filter(set => set.exercise_id === exerciseId);
+
+    return (
+      <div className='AddNew__sets-list'>
+        <div className='AddNew__sets-headers'>
+          <div>Set</div>
+          <div>Lbs</div>
+          <div>Reps</div>
+        </div>
+        {
+          sets.map((set, index) => {
+            return (
+              <div key={`set-${set.id}`}className='AddNew__sets-entry'>
+                <div>{index + 1}</div>
+                <input 
+                  type='text'
+                  name='set-weight'
+                  onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
+                />
+                <input
+                  type='text'
+                  name='set-reps'
+                  onChange={e => this.updateSetReps(e.target.value, set.id)}
+                />
+              </div>
+            );
+          })
         }
+        <button data-exerciseid={exerciseId} id="new" onClick={this.addSet}>+ Add Set</button>
+      </div>
+    );
+  }
 
-        this.setState({
-            error: null
-        })
+  render() {
+    //let{sets} = this.state;
+    let exercises = this.state.exercises;
 
-        console.log(workout);
-        this.context.addWorkout(workout);
-
-
-    }
-
-    render() {
-        let{sets} = this.state;
-        //console.log(uuid());
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <label htmlFor="name">Name: </label>
-                    <input 
-                        type="text"
-                        name="name"
-                        onChange={e => this.nameChange(e.target.value)}
-                        />
-
-
-
-                </div>
-
-
-
-
-                {/* <div>
-                    <label htmlFor="date">Date: </label>
-                        <input 
-                            placeholder="Squat" 
-                            type="date" 
-                            name='date' 
-                            onChange={e => this.dateChanged(e.target.value)}
-                            />
-                    </div>
-                    <div>
-                    <label htmlFor="exercise">Exercise: </label>
-                    <input 
-                        placeholder="Squat" 
-                        type="text" 
-                        name='exercise' 
-                        onChange={e => this.exerciseChanged(e.target.value)}/>
-                </div>
-                <button onClick={this.addSet}>+ Add Set</button>
-                
-                <div>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Set</th>
-                                <th>Reps</th>
-                                <th>Weight</th>
-                            </tr>
-                            {sets.map((val, idx) => {
-                                let setId = `set-${idx}`, repId = `rep=${idx}`, weightId = `weight-${idx}`;
-                                return (
-
-                                <tr>
-                                    <td>{idx + 1}</td>
-                                    <td><input type="number" name={repId} /></td>
-                                    <td><input type="number" name={weightId} /> lbs</td>
-                                </tr>
-
-                                )
-                            })}
-
-                        </tbody>
-                    </table>
-                </div> */}
-
-                {/* <button className="new">+ Add Exercise</button> */}
-
-
-                <button type="submit">Save</button>
-                <button type="">Cancel</button>
-            </form >
-        );
-    }
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div className='AddNew__workout'>
+          <label htmlFor="name">Name: </label>
+          <input
+            type="text"
+            name="name"
+            onChange={e => this.nameChange(e.target.value)}
+          />
+          {this.renderExercises(exercises)}
+        </div>
+        <button type="submit">Save</button>
+        <button type="cancel" onClick={this.handleCancel}>Cancel</button>
+      </form >
+    );
+  }
 }
 
 export default AddNew;

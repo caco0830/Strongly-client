@@ -26,7 +26,6 @@ class ExerciseDisplay extends React.Component{
                             <div className='ExerciseDisplay__name'> {ex.name}</div>
                             <div className='ExerciseDisplay__sets'>{countSets(sets, ex.id)}</div>
                         </div>
-
                     )
                 })}
             </div>
