@@ -1,0 +1,23 @@
+.WorkoutPage ul{
+    list-style-type: none;
+}
+
+.WorkoutPage__exercises{
+    max-width: 400px;
+    margin: auto;
+}
+
+.WorkoutPage__exercises{
+    text-align: left;
+}
+
+.WorkoutPage__setList{
+    max-width: 400px;
+    margin: auto;
+    font-size: 15px;
+    text-align: left;
+}
+
+.WorkoutPage__set{
+    max-width: 400px;
+}

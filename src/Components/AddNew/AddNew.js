@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
 //import AddSet from '../AddSet/AddSet';
-
 import './AddNew.css';
+import uuid from 'uuid/v4';
 
 class AddNew extends Component {
 
     constructor(props){
         super(props);
         this.state = {
+            "error": null,
             "date": "",
             "exercise": "",
             "numSets": "",
-            "sets": [{order:"", reps:"", weight:""}]
+            //"sets": [{order:"", reps:"", weight:""}],
+
+
+            "id": uuid(),
+            "createdDate": "",
+            "name":"",
+            "user_id":"",
+            "exercises": [{id: '', workout_id: '', name: '', user_id: '1'}],
+            "sets":[{order:"", reps:"", weight:""}]
+
 
         }
+    }
+
+    nameChange(name){
+        this.setState({
+            name
+        });
     }
 
     exerciseChanged(exercise) {
@@ -34,15 +50,7 @@ class AddNew extends Component {
         })
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-    }
-
-    handleChange = (e) => {
-
-
-
-    }
+    
 
     addSet = (e) => {
         this.setState((prevState) => ({
@@ -50,13 +58,45 @@ class AddNew extends Component {
         }))
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
 
+        const name = e.target.name.value;
+        const workout = {
+            name: name
+        }
+
+        this.setState({
+            error: null
+        })
+
+        console.log(workout);
+        this.context.addWorkout(workout);
+
+
+    }
 
     render() {
         let{sets} = this.state;
+        //console.log(uuid());
         return (
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={this.handleSubmit}>
                 <div>
+                    <label htmlFor="name">Name: </label>
+                    <input 
+                        type="text"
+                        name="name"
+                        onChange={e => this.nameChange(e.target.value)}
+                        />
+
+
+
+                </div>
+
+
+
+
+                {/* <div>
                     <label htmlFor="date">Date: </label>
                         <input 
                             placeholder="Squat" 
@@ -74,15 +114,7 @@ class AddNew extends Component {
                         onChange={e => this.exerciseChanged(e.target.value)}/>
                 </div>
                 <button onClick={this.addSet}>+ Add Set</button>
-                {/* <div>
-                    <label htmlFor="sets">Sets: </label>
-                    <input 
-                        placeholder="" 
-                        type="number" 
-                        name='lastname'
-                        min="1" 
-                        onChange={e => this.setsChanged(e.target.value)}/>
-                </div> */}
+                
                 <div>
                     <table>
                         <tbody>
@@ -92,7 +124,7 @@ class AddNew extends Component {
                                 <th>Weight</th>
                             </tr>
                             {sets.map((val, idx) => {
-                                let /*setId = `set-${idx}`,*/ repId = `rep=${idx}`, weightId = `weight-${idx}`;
+                                let setId = `set-${idx}`, repId = `rep=${idx}`, weightId = `weight-${idx}`;
                                 return (
 
                                 <tr>
@@ -106,7 +138,7 @@ class AddNew extends Component {
 
                         </tbody>
                     </table>
-                </div>
+                </div> */}
 
                 {/* <button className="new">+ Add Exercise</button> */}
 

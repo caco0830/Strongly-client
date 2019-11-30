@@ -27,6 +27,15 @@ class App extends Component{
     });
   }
 
+  handleAddWorkout = workout => {
+    this.state({
+      workouts: [
+        ...this.state.workouts,
+        workout
+      ]
+    });
+  }
+
   render(){
     const value = {
       workouts: this.state.workouts,

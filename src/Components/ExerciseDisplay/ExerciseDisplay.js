@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContext from '../../AppContext';
 import {countSets} from '../../helper';
+
 import './ExerciseDisplay.css';
 
 class ExerciseDisplay extends React.Component{
@@ -11,7 +12,7 @@ class ExerciseDisplay extends React.Component{
         let sets = this.context.sets;
         let workoutId = this.props.workoutId;
         
-        exercises = exercises.filter(ex => {return ex.workout_id === workoutId});
+        exercises = exercises.filter(ex => {return ex.workout_id === workoutId}) || "";
 
         return (
             <div className='ExerciseDisplay'>
