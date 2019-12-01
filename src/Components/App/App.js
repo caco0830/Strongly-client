@@ -28,12 +28,21 @@ class App extends Component{
   }
 
   handleAddWorkout = workout => {
+    const workouts = this.state.workouts;
+    const index = workouts.findIndex(w => w.id === workout.id);
+    
+    workouts[index] = workout;
+    
     this.setState({
-      workouts: [
-        ...this.state.workouts,
-        workout
-      ]
+      workouts
     });
+    
+    // this.setState({
+    //   workouts: [
+    //     ...this.state.workouts,
+    //     workout
+    //   ]
+    // });
   }
 
   handleAddExercise = exercises => {
@@ -102,6 +111,11 @@ class App extends Component{
               <Route
                 exact
                 path='/addNew'
+                component={AddNew}
+              />
+              <Route
+                exact
+                path='/workout/:workoutId/edit'
                 component={AddNew}
               />
               <Route 

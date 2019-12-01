@@ -55,7 +55,7 @@ class WorkoutPage extends React.Component{
             )
           })}
         </div>
-        <Link to={`/${workoutId}/edit`}><button>Edit</button></Link>
+        <Link to={`${workoutId}/edit`}><button>Edit</button></Link>
         
         <button type='button' onClick={this.handleDelete}>Delete</button>
       </div>);

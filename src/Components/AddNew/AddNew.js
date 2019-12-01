@@ -2,20 +2,40 @@ import React, { Component } from 'react';
 import AppContext from '../../AppContext';
 import './AddNew.css';
 import uuid from 'uuid/v4';
+import {findWorkout, getExercises, getSets} from '../../helper';
 
 class AddNew extends Component {
 
   static contextType = AppContext;
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
-    this.state = {
-      "error": null,
-      "workout_id": uuid(),
-      "name": "",
-      "user_id": "",
-      "exercises": [],
-      "sets": []
+    const workouts = context.workouts;
+    
+    const workoutId = this.props.match.params.workoutId;
+    const workout = findWorkout(workouts, workoutId)
+    
+
+    if(workoutId && workout){
+      this.state = {
+        "error": null,
+        "workout_id": workoutId,
+        "name": workout.name,
+        "user_id": workout.user_id,
+        "exercises": [],
+        "sets": [],
+        "date": workout.createdDate
+      }
+    }else{
+      this.state = {
+        "error": null,
+        "workout_id": uuid(),
+        "name": "",
+        "user_id": "",
+        "exercises": [],
+        "sets": [],
+        "date": new Date()
+      }
     }
   }
 
@@ -61,7 +81,7 @@ class AddNew extends Component {
     const workout = {
       id: this.state.workout_id,
       name: e.target.name.value,
-      createdDate: new Date(),
+      createdDate: this.state.date,
       user_id: 1
     }
 
@@ -169,6 +189,7 @@ class AddNew extends Component {
           <input
             type="text"
             name="name"
+            value={this.state.name}
             onChange={e => this.nameChange(e.target.value)}
           />
           {this.renderExercises(exercises)}
