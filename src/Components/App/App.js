@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+//import Footer from '../Footer/Footer';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import ListPage from '../ListPage/ListPage';
@@ -40,64 +40,22 @@ class App extends Component{
     this.setState({
       workouts
     });
-    
-    // this.setState({
-    //   workouts: [
-    //     ...this.state.workouts,
-    //     workout
-    //   ]
-    // });
   }
 
-  handleAddExercise = exercises => {
-    const exerciseList = this.state.exercises;
+  handleAddExercise = (exercises, workoutId) => {
+    let exerciseList = this.state.exercises.filter(ex => ex.workout_id !== workoutId);
 
-    exercises.forEach(ex => {
-      const index = exerciseList.findIndex(exer => exer.id === ex.id);
-      if(index > -1){
-        exerciseList[index] = ex;
-      }else{
-        exerciseList.push(ex);
-      }
-    });
+    exerciseList = [...exerciseList, ...exercises];
 
     this.setState({
       exercises: exerciseList
     });
-
-
-    // this.setState({
-    //   exercises: [
-    //     ...this.state.exercises,
-    //     ...exercises
-    //   ]
-    // });
   }
 
   handleAddSets = sets => {
-    const setList = this.state.sets;
-    //console.log(setList)
-    
-    sets.forEach(s => {
-      const index = setList.findIndex(ss => ss.id === s.id);
-
-      if(index > -1){
-        setList[index] = s;
-      }else{
-        setList.push(s);
-      }
-    });
-
     this.setState({
-      sets: setList
+      sets: sets
     });
-    
-    // this.setState({
-    //   sets: [
-    //     ...this.state.sets,
-    //     ...sets
-    //   ]
-    // });
   }
 
   handleDeleteWorkout = workoutId => {
@@ -161,7 +119,7 @@ class App extends Component{
                 component={WorkoutPage}/>
             </Switch>
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </AppContext.Provider>
     );

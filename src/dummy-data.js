@@ -1,3 +1,5 @@
+//TODO: include workout_id on sets
+
 export default {
     "workouts": [
         {

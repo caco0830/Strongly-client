@@ -1,5 +1,3 @@
-
-
 .AddNew__sets-headers{
     max-width: 400px;
     margin: auto;
@@ -18,4 +16,8 @@
 
 .AddNew__sets-entry input{
     width: 70px;
+}
+
+.AddNew__exercises-entry {
+    margin-top: 20px;
 }

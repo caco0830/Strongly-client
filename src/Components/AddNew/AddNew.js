@@ -92,8 +92,10 @@ class AddNew extends Component {
       error: null
     });
 
+
+
     this.context.addWorkout(workout);
-    this.context.addExercise(this.state.exercises);
+    this.context.addExercise(this.state.exercises, workout.id);
     this.context.addSet(this.state.sets);
     this.props.history.push('/home');
   }
@@ -124,9 +126,22 @@ class AddNew extends Component {
     });
   }
 
+  handleRemoveSet = (setId) => {
+    this.setState({
+      sets: this.state.sets.filter(set => set.id !== setId)
+    });
+  }
+
+  handleRemoveExercise(e,exId){
+    e.preventDefault();
+    
+    this.setState({
+      exercises: this.state.exercises.filter(ex => ex.id !== exId)
+    });
+  }
+
   renderExercises(exercises) {
     const sets = this.state.sets;
-    //console.log(sets)
     return (
       <div className='AddNew__exercises-list'>
         {exercises.map((ex, index) => {
@@ -140,6 +155,7 @@ class AddNew extends Component {
                 value={ex.name}
                 onChange={e => this.updateExerciseName(e.target.value, index)}
               />
+              <button onClick={e => this.handleRemoveExercise(e, ex.id)}>Remove</button>
               {this.renderSets(sets, ex.id)}
             </div>
           );
@@ -150,7 +166,8 @@ class AddNew extends Component {
   }
 
   renderSets(sets, exerciseId) {
-    sets = sets.filter(set => set.exercise_id === exerciseId);
+    //sets = sets.filter(set => set.exercise_id === exerciseId);
+    sets = getSets(sets, exerciseId);
 
     return (
       <div className='AddNew__sets-list'>
@@ -158,6 +175,7 @@ class AddNew extends Component {
           <div>Set</div>
           <div>Lbs</div>
           <div>Reps</div>
+          <div>Actions</div>
         </div>
         {
           sets.map((set, index) => {
@@ -176,6 +194,7 @@ class AddNew extends Component {
                   value={set.reps}
                   onChange={e => this.updateSetReps(e.target.value, set.id)}
                 />
+                <button onClick={() => this.handleRemoveSet(set.id)}>Remove</button>
               </div>
             );
           })
@@ -186,7 +205,6 @@ class AddNew extends Component {
   }
 
   render() {
-    //let{sets} = this.state;
     let exercises = this.state.exercises;
 
     return (

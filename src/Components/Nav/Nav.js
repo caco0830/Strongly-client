@@ -71,7 +71,7 @@ export default class Nav extends React.Component{
         return(
             <div>
                 <nav className='Header'>
-                        <Link to='/' onClick={this.handleLinkClick}>
+                        <Link to='/home' onClick={this.handleLinkClick}>
                             <h1>Strongly</h1>
                         </Link>
                     
