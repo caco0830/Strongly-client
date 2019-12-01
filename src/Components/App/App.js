@@ -31,7 +31,11 @@ class App extends Component{
     const workouts = this.state.workouts;
     const index = workouts.findIndex(w => w.id === workout.id);
     
-    workouts[index] = workout;
+    if(index > -1){
+      workouts[index] = workout;
+    }else{
+      workouts.push(workout);
+    }
     
     this.setState({
       workouts
@@ -46,21 +50,54 @@ class App extends Component{
   }
 
   handleAddExercise = exercises => {
-    this.setState({
-      exercises: [
-        ...this.state.exercises,
-        ...exercises
-      ]
+    const exerciseList = this.state.exercises;
+
+    exercises.forEach(ex => {
+      const index = exerciseList.findIndex(exer => exer.id === ex.id);
+      if(index > -1){
+        exerciseList[index] = ex;
+      }else{
+        exerciseList.push(ex);
+      }
     });
+
+    this.setState({
+      exercises: exerciseList
+    });
+
+
+    // this.setState({
+    //   exercises: [
+    //     ...this.state.exercises,
+    //     ...exercises
+    //   ]
+    // });
   }
 
   handleAddSets = sets => {
-    this.setState({
-      sets: [
-        ...this.state.sets,
-        ...sets
-      ]
+    const setList = this.state.sets;
+    //console.log(setList)
+    
+    sets.forEach(s => {
+      const index = setList.findIndex(ss => ss.id === s.id);
+
+      if(index > -1){
+        setList[index] = s;
+      }else{
+        setList.push(s);
+      }
     });
+
+    this.setState({
+      sets: setList
+    });
+    
+    // this.setState({
+    //   sets: [
+    //     ...this.state.sets,
+    //     ...sets
+    //   ]
+    // });
   }
 
   handleDeleteWorkout = workoutId => {

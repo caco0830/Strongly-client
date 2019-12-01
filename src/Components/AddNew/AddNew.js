@@ -11,10 +11,13 @@ class AddNew extends Component {
   constructor(props, context) {
     super(props);
     const workouts = context.workouts;
-    
+    let exercises = context.exercises;
+    let sets = context.sets;
+        
     const workoutId = this.props.match.params.workoutId;
     const workout = findWorkout(workouts, workoutId)
-    
+    exercises = getExercises(exercises, workoutId);
+      
 
     if(workoutId && workout){
       this.state = {
@@ -22,8 +25,8 @@ class AddNew extends Component {
         "workout_id": workoutId,
         "name": workout.name,
         "user_id": workout.user_id,
-        "exercises": [],
-        "sets": [],
+        "exercises": exercises,
+        "sets": sets,
         "date": workout.createdDate
       }
     }else{
@@ -123,6 +126,7 @@ class AddNew extends Component {
 
   renderExercises(exercises) {
     const sets = this.state.sets;
+    //console.log(sets)
     return (
       <div className='AddNew__exercises-list'>
         {exercises.map((ex, index) => {
@@ -133,6 +137,7 @@ class AddNew extends Component {
                 placeholder='Squat'
                 type="text"
                 name='exercise-name'
+                value={ex.name}
                 onChange={e => this.updateExerciseName(e.target.value, index)}
               />
               {this.renderSets(sets, ex.id)}
@@ -162,11 +167,13 @@ class AddNew extends Component {
                 <input 
                   type='text'
                   name='set-weight'
+                  value={set.weight}
                   onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
                 />
                 <input
                   type='text'
                   name='set-reps'
+                  value={set.reps}
                   onChange={e => this.updateSetReps(e.target.value, set.id)}
                 />
               </div>
