@@ -53,6 +53,7 @@ class App extends Component{
   }
 
   handleAddSets = sets => {
+    console.log(sets);
     this.setState({
       sets: sets
     });

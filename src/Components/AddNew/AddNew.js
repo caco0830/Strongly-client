@@ -36,7 +36,7 @@ class AddNew extends Component {
         "name": "",
         "user_id": "",
         "exercises": [],
-        "sets": [],
+        "sets": sets,
         "date": new Date()
       }
     }
