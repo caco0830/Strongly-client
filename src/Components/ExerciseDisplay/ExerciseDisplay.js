@@ -22,8 +22,9 @@ class ExerciseDisplay extends React.Component{
                 </div>
                 {exercises.map((ex,idx) => {
                     return (
+                        
                         <div key={ex.id} className='ExerciseDisplay__exercise'>
-                            <div className='ExerciseDisplay__name'> {ex.name}</div>
+                            <div className='ExerciseDisplay__name'> {ex.title}</div>
                             <div className='ExerciseDisplay__sets'>{countSets(sets, ex.id)}</div>
                         </div>
                     )

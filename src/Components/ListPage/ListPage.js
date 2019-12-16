@@ -13,7 +13,6 @@ class ListPage extends Component {
 
         return (
             workouts.map(workout => {
-                //console.log(workout.id)
                 return <WorkoutCard key={workout.id} workout={workout}></WorkoutCard>
             })
         );

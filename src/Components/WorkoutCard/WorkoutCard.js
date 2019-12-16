@@ -12,7 +12,7 @@ class WorkoutCard extends React.Component{
             <NavLink className='WorkoutCard__link' to={`/workout/${workout.id}`}>
                 <div className="WorkoutCard">
                     <header>
-                        <div className="WorkoutCard__name">{workout.name}</div>
+                        <div className="WorkoutCard__name">{workout.title}</div>
                         <div className="WorkoutCard__date">{workout.createdDate ? format(workout.createdDate, 'MMM d') : ''}</div>
                     </header>
                     <ExerciseDisplay workoutId={workout.id} />

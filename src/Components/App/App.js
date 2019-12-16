@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Nav from '../Nav/Nav';
-//import Footer from '../Footer/Footer';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import ListPage from '../ListPage/ListPage';
 import AddNew from '../AddNew/AddNew';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import WorkoutPage from '../WorkoutPage/WorkoutPage';
-import data from '../../dummy-data';
 import AppContext from '../../AppContext';
+import config from '../../config';
 
 class App extends Component{
 
@@ -20,11 +19,26 @@ class App extends Component{
   }
 
   componentDidMount(){
-    this.setState({
-      workouts: data.workouts,
-      exercises: data.exercises,
-      sets: data.sets
-    });
+    Promise.all([
+      fetch(`${config.API_ENDPOINT}/api/workouts`),
+      fetch(`${config.API_ENDPOINT}/api/exercises`),
+      fetch(`${config.API_ENDPOINT}/api/sets`)
+    ])
+    .then(([workoutsRes, exercisesRes, setsRes]) => {
+      if(!workoutsRes.ok)
+        return workoutsRes.json().then(e => Promise.reject(e));
+      if(!exercisesRes.ok)
+        return exercisesRes.json().then(e => Promise.reject(e));
+      if(!setsRes.ok)
+        return setsRes.json().then(e => Promise.reject(e));
+      return Promise.all([workoutsRes.json(), exercisesRes.json(), setsRes.json()]);
+      })
+      .then(([workouts, exercises, sets]) => {
+        this.setState({workouts, exercises, sets});
+      })
+      .catch(error => {
+        console.error({error});
+      });
   }
 
   handleAddWorkout = workout => {
@@ -33,7 +47,7 @@ class App extends Component{
     
     if(index > -1){
       workouts[index] = workout;
-    }else{
+    }else{  
       workouts.push(workout);
     }
     
@@ -52,10 +66,12 @@ class App extends Component{
     });
   }
 
-  handleAddSets = sets => {
-    console.log(sets);
+  handleAddSets = (sets, workoutId) => {
+    let setList = this.state.sets.filter(set => set.workout_id !== workoutId);
+    setList = [...setList, ...sets];
+ 
     this.setState({
-      sets: sets
+      sets: setList
     });
   }
 
