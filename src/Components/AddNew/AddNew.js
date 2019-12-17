@@ -29,7 +29,7 @@ class AddNew extends Component {
   }
 
   componentDidMount(){
-    if(this.props.workout_id){
+    if(this.props.match.params.workoutId){
       Promise.all([
         fetch(`${config.API_ENDPOINT}/api/workouts/${this.props.match.params.workoutId}`),
         fetch(`${config.API_ENDPOINT}/api/exercises?workout_id=${this.props.match.params.workoutId}`),
@@ -91,70 +91,50 @@ class AddNew extends Component {
     });
   }
 
-  postExercises(){
-    const exercises = this.state.exercises;
-
-    fetch(`${config.API_ENDPOINT}/api/exercises`, {
-      method: 'POST',
-      body: JSON.stringify(exercises),
-      headers:{
-        'content-type': 'application/json'
-      }
-    })
-    .then(res => {
-      if(!res.ok){
-        return res.json().then(error => {
-          throw error;
-        });
-      }
-      return res.json();
-    })
-    .then(data => {
-      this.context.addExercise(exercises);
-      this.postSets();
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  }
-
-  postSets(){
-    const sets = this.state.sets;
-
-    fetch(`${config.API_ENDPOINT}/api/sets`, {
-      method: 'POST',
-      body: JSON.stringify(sets),
-      headers:{
-        'content-type': 'application/json'
-      }
-    })
-    .then(res => {
-      if(!res.ok){
-        return res.json().then(error => {
-          throw error;
-        });
-      }
-      return res.json();
-    })
-    .then(data => {
-      this.context.addSet(sets, this.state.workout.id);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
+    
+    this.postWorkout();
+    
+
+    // fetch(`${config.API_ENDPOINT}/api/workouts`, {
+    //   method: 'POST',
+    //   body: JSON.stringify(workout),
+    //   headers:{
+    //     'content-type': 'application/json'
+    //   }
+    // })
+    // .then(res => {
+    //   if(!res.ok){
+    //     return res.json().then(error => {
+    //       throw error;
+    //     });
+    //   }
+    //   return res.json();
+    // })
+    // .then(data => {
+    //   this.postExercises();
+    //   this.context.addWorkout(data);
+    //   this.props.history.push('/home');
+    // })
+    // .catch(error => {
+    //   this.setState({error});
+    // });
+  }
+
+  postWorkout(){
 
     const workout = this.state.workout;
+    let method = 'POST';
+    let workoutId = '';
 
-    this.setState({
-      error: null
-    });
+    if(this.props.match.params.workoutId){
+      method = 'PATCH';
+      workoutId = `/${workout.id}`
+    } 
 
-    fetch(`${config.API_ENDPOINT}/api/workouts`, {
-      method: 'POST',
+    fetch(`${config.API_ENDPOINT}/api/workouts${workoutId}`, {
+      method: method,
       body: JSON.stringify(workout),
       headers:{
         'content-type': 'application/json'
@@ -176,10 +156,72 @@ class AddNew extends Component {
     .catch(error => {
       this.setState({error});
     });
+
+  }
+
+  postExercises(){
+    const exercises = this.state.exercises;
+
+    
+
+    if(exercises.length > 0){
+
+      fetch(`${config.API_ENDPOINT}/api/exercises`, {
+        method: 'POST',
+        body: JSON.stringify(exercises),
+        headers:{
+          'content-type': 'application/json'
+        }
+      })
+      .then(res => {
+        if(!res.ok){
+          return res.json().then(error => {
+            throw error;
+          });
+        }
+        return res.json();
+      })
+      .then(data => {
+        this.context.addExercise(exercises);
+        this.postSets();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  }
+
+  postSets(){
+    const sets = this.state.sets;
+
+    if(sets.length > 0){
+
+      fetch(`${config.API_ENDPOINT}/api/sets`, {
+        method: 'POST',
+        body: JSON.stringify(sets),
+        headers:{
+          'content-type': 'application/json'
+        }
+      })
+      .then(res => {
+        if(!res.ok){
+          return res.json().then(error => {
+            throw error;
+          });
+        }
+        return res.json();
+      })
+      .then(data => {
+        this.context.addSet(sets, this.state.workout.id);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
   }
 
   handleCancel = (e) => {
-    this.props.history.push('/');
+    this.props.history.push('/home');
   }
 
   addExercise = (e) => {
@@ -251,8 +293,8 @@ class AddNew extends Component {
       <div className='AddNew__sets-list'>
         <div className='AddNew__sets-headers'>
           <div>Set</div>
-          <div>Lbs</div>
           <div>Reps</div>
+          <div>Lbs</div>
           <div>Actions</div>
         </div>
         {
@@ -260,19 +302,19 @@ class AddNew extends Component {
             return (
               <div key={`set-${set.id}`}className='AddNew__sets-entry'>
                 <div>{index + 1}</div>
+                <input
+                  type='text'
+                  name='set-reps'
+                  value={set.reps}
+                  onChange={e => this.updateSetReps(e.target.value, set.id)}
+                />
                 <input 
                   type='text'
                   name='set-weight'
                   value={set.weight}
                   onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
                 />
-                <input
-                  type='text'
-                  placeholder='name'
-                  name='set-reps'
-                  value={set.reps}
-                  onChange={e => this.updateSetReps(e.target.value, set.id)}
-                />
+                
                 <button onClick={() => this.handleRemoveSet(set.id)}>Remove</button>
               </div>
             );

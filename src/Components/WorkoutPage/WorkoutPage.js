@@ -34,21 +34,45 @@ class WorkoutPage extends React.Component{
     })
     .then(([workout, exercises, sets]) => {
       this.setState({workout, exercises, sets, createdDate: workout.createddate});
-    });
+    })
+    .catch(error => {
+      console.error(error);
+    })
   }
 
 
   handleDelete = (e) => {
     e.preventDefault();
     const workoutId = this.props.match.params.workoutId;
-    this.context.deleteWorkout(workoutId);
-    this.props.history.push('/home');
+    // this.context.deleteWorkout(workoutId);
+    // this.props.history.push('/home');
+
+    fetch(`${config.API_ENDPOINT}/api/workouts/${workoutId}`, {
+      method: 'DELETE' 
+    })
+    .then(res => {
+      if(!res.ok){
+        return res.json().then(error => {
+          throw error;
+        });
+      }
+      return res;
+    })
+    .then(data => {
+      console.log('called back')
+      this.props.history.push('/home');
+      this.context.deleteWorkout(workoutId);
+      
+    })
+    .catch(error => {
+      console.error(error);
+    })
 
   }
 
   render(){
     let {workoutId} = this.props.match.params;
-    workoutId = parseInt(workoutId);
+    
     const sets = this.state.sets;
     let createdDate = this.state.createdDate;
 
