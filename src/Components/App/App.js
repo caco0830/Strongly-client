@@ -8,7 +8,10 @@ import AddNew from '../AddNew/AddNew';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import WorkoutPage from '../WorkoutPage/WorkoutPage';
 import AppContext from '../../AppContext';
-import config from '../../config';
+//import config from '../../config';
+import {getAllWorkouts} from '../../services/workoutAPI';
+import {getAllExercises} from '../../services/exercisesAPI';
+import {getAllSets} from '../../services/setsAPI';
 
 class App extends Component{
 
@@ -18,27 +21,34 @@ class App extends Component{
     sets: []
   }
 
-  componentDidMount(){
-    Promise.all([
-      fetch(`${config.API_ENDPOINT}/api/workouts`),
-      fetch(`${config.API_ENDPOINT}/api/exercises`),
-      fetch(`${config.API_ENDPOINT}/api/sets`)
-    ])
-    .then(([workoutsRes, exercisesRes, setsRes]) => {
-      if(!workoutsRes.ok)
-        return workoutsRes.json().then(e => Promise.reject(e));
-      if(!exercisesRes.ok)
-        return exercisesRes.json().then(e => Promise.reject(e));
-      if(!setsRes.ok)
-        return setsRes.json().then(e => Promise.reject(e));
-      return Promise.all([workoutsRes.json(), exercisesRes.json(), setsRes.json()]);
-      })
-      .then(([workouts, exercises, sets]) => {
-        this.setState({workouts, exercises, sets});
-      })
-      .catch(error => {
-        console.error({error});
-      });
+  async componentDidMount(){
+    const workouts = await getAllWorkouts();
+    const exercises = await getAllExercises();
+    const sets = await getAllSets();
+
+
+    this.setState({workouts, exercises, sets});
+
+    // Promise.all([
+    //   fetch(`${config.API_ENDPOINT}/api/workouts`),
+    //   fetch(`${config.API_ENDPOINT}/api/exercises`),
+    //   fetch(`${config.API_ENDPOINT}/api/sets`)
+    // ])
+    // .then(([workoutsRes, exercisesRes, setsRes]) => {
+    //   if(!workoutsRes.ok)
+    //     return workoutsRes.json().then(e => Promise.reject(e));
+    //   if(!exercisesRes.ok)
+    //     return exercisesRes.json().then(e => Promise.reject(e));
+    //   if(!setsRes.ok)
+    //     return setsRes.json().then(e => Promise.reject(e));
+    //   return Promise.all([workoutsRes.json(), exercisesRes.json(), setsRes.json()]);
+    //   })
+    //   .then(([workouts, exercises, sets]) => {
+    //     this.setState({workouts, exercises, sets});
+    //   })
+    //   .catch(error => {
+    //     console.error({error});
+    //   });
   }
 
   handleAddWorkout = workout => {
@@ -57,6 +67,7 @@ class App extends Component{
   }
 
   handleAddExercise = (exercises, workoutId) => {
+    console.log(exercises)
     let exerciseList = this.state.exercises.filter(ex => ex.workout_id !== workoutId);
 
     exerciseList = [...exerciseList, ...exercises];
