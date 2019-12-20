@@ -81,8 +81,8 @@ class AddNew extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (this.props.match.params.workoutId) {
-      await this.patchWorkouts();
+    if(this.props.match.params.workoutId) {
+      await this.upsertWorkouts();
       await this.patchExercises();
       await this.patchSets();
       await this.props.history.push('/home');
@@ -107,11 +107,9 @@ class AddNew extends Component {
     const exercises = this.state.exercises;
     const workoutId = this.props.match.params.workoutId;
 
-    if (exercises.length > 0) {
-      let newExercises = await createExercises(exercises);
-      console.log(newExercises)
-      this.context.addExercise(newExercises, workoutId);
-    }
+    let newExercises = await createExercises(exercises);
+    console.log(newExercises)
+    this.context.addExercise(newExercises, workoutId);
   }
 
   async postSets() {
@@ -132,11 +130,41 @@ class AddNew extends Component {
     this.context.addWorkout(workout);
   }
 
-  async patchExercises() {
+  async upsertExercises() {
     const exercises = this.state.exercises;
     const workoutId = this.props.match.params.workoutId;
 
-    await updateExercises(exercises);
+    const exercisesToCreate = [];
+    const exercisesToUpdate = [];
+
+    if (exercises.length > 0) {
+
+      exercises.map(ex => {
+        if(ex.isNew === true){
+          const e = {
+            id: ex.id,
+            title: ex.title,
+            workout_id: ex.workout_id
+          }
+          exercisesToCreate.push(e);
+        }else{
+          exercisesToUpdate.push(ex);
+        }
+      });
+
+      console.log(exercisesToCreate)
+
+      if(exercisesToUpdate.length > 0){
+        let newExercises = await updateExercises(exercisesToUpdate);
+      }
+
+      if(exercisesToCreate.length > 0){
+        await createExercises(exercisesToCreate);
+      }
+
+      this.context.addExercise(exercises, workoutId);
+    }
+
     this.context.addExercise(exercises, workoutId);
   }
 
@@ -158,7 +186,7 @@ class AddNew extends Component {
     this.setState({
       exercises: [
         ...this.state.exercises,
-        { id: uuid(), workout_id: this.state.workout.id, title: '' }
+        { id: uuid(), workout_id: this.state.workout.id, title: '', isNew: true }
       ]
     });
   }
@@ -169,7 +197,7 @@ class AddNew extends Component {
     this.setState({
       sets: [
         ...this.state.sets,
-        { id: uuid(), reps: "", weight: "", exercise_id: exerciseid, workout_id: this.state.workout.id }
+        { id: uuid(), reps: "", weight: "", exercise_id: exerciseid, workout_id: this.state.workout.id, isNew: true }
       ]
     });
   }
