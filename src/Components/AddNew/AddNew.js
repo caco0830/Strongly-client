@@ -82,9 +82,9 @@ class AddNew extends Component {
     e.preventDefault();
 
     if(this.props.match.params.workoutId) {
-      await this.upsertWorkouts();
-      await this.patchExercises();
-      await this.patchSets();
+      await this.patchWorkouts();
+      await this.upsertExercises();
+      await this.upsertSets();
       await this.props.history.push('/home');
     } else {
       //this.postWorkout();
@@ -106,20 +106,35 @@ class AddNew extends Component {
   async postExercises() {
     const exercises = this.state.exercises;
     const workoutId = this.props.match.params.workoutId;
+    const exercisesToCreate = [];
 
-    let newExercises = await createExercises(exercises);
-    console.log(newExercises)
-    this.context.addExercise(newExercises, workoutId);
+    if(exercises.length > 0){
+      exercises.forEach(ex => {
+        exercisesToCreate.push({title: ex.title, id: ex.id, workout_id: ex.workout_id})
+      })
+
+      let newExercises = await createExercises(exercisesToCreate);
+      this.context.addExercise(newExercises, workoutId);
+  }
   }
 
   async postSets() {
     const workoutId = this.props.match.params.workoutId;
     const sets = this.state.sets;
-
+    const setsToCreate = [];
 
     if (sets.length > 0) {
-      let newSets = await createSets(sets);
-      console.log(newSets)
+      sets.forEach(s => {
+        setsToCreate.push({
+          exercise_id: s.exercise_id,
+          id: s.id,
+          reps: s.reps,
+          weight: s.weight,
+          workout_id: s.workout_id
+        });
+      });
+
+      let newSets = await createSets(setsToCreate);
       this.context.addSet(newSets, workoutId);
     }
   }
@@ -139,7 +154,7 @@ class AddNew extends Component {
 
     if (exercises.length > 0) {
 
-      exercises.map(ex => {
+      exercises.forEach(ex => {
         if(ex.isNew === true){
           const e = {
             id: ex.id,
@@ -152,10 +167,8 @@ class AddNew extends Component {
         }
       });
 
-      console.log(exercisesToCreate)
-
       if(exercisesToUpdate.length > 0){
-        let newExercises = await updateExercises(exercisesToUpdate);
+        await updateExercises(exercisesToUpdate);
       }
 
       if(exercisesToCreate.length > 0){
@@ -164,16 +177,41 @@ class AddNew extends Component {
 
       this.context.addExercise(exercises, workoutId);
     }
-
-    this.context.addExercise(exercises, workoutId);
   }
 
-  async patchSets() {
+  async upsertSets(){
     const sets = this.state.sets;
     const workoutId = this.props.match.params.workoutId;
 
-    await updateSets(sets);
-    this.context.addSet(sets, workoutId);
+    const setsToCreate = [];
+    const setsToUpdate = [];
+
+    if(sets.length > 0){
+
+      sets.forEach(s => {
+          if(s.isNew === true){
+            setsToCreate.push({
+              exercise_id: s.exercise_id,
+              id: s.id,
+              reps: s.reps,
+              weight: s.weight,
+              workout_id: s.workout_id
+            });
+          }else{
+            setsToUpdate.push(s);
+          }
+      });
+
+      if(setsToUpdate.length > 0){
+        await updateSets(setsToUpdate);
+      }
+
+      if(setsToCreate.length > 0){
+        await createSets(setsToCreate);
+      }
+
+      this.context.addSet(sets, workoutId);
+    }
   }
 
   handleCancel = (e) => {

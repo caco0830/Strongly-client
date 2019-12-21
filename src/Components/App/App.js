@@ -67,7 +67,6 @@ class App extends Component{
   }
 
   handleAddExercise = (exercises, workoutId) => {
-    console.log(exercises)
     let exerciseList = this.state.exercises.filter(ex => ex.workout_id !== workoutId);
 
     exerciseList = [...exerciseList, ...exercises];
