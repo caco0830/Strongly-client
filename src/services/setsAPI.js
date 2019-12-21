@@ -50,47 +50,65 @@ export async function getSetsByWorkoutId(workoutId) {
     return sets;
 }
 
-export async function createSets(sets){
+export async function createSets(sets) {
 
     let newSets;
-    
+
     await fetch(`${config.API_ENDPOINT}/api/sets`, {
         method: 'POST',
         body: JSON.stringify(sets),
-        headers:{
+        headers: {
             'content-type': 'application/json'
         }
     })
-    .then(res => {
-        if(!res.ok){
-            return res.json().then(error => {
-                throw error;
-            })
-        }
-        return res.json();
-    })
-    .then(data => {
-        newSets = sets;
-    })
-    .catch(error => {
-        console.error(error);
-    });
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(error => {
+                    throw error;
+                })
+            }
+            return res.json();
+        })
+        .then(data => {
+            newSets = sets;
+        })
+        .catch(error => {
+            console.error(error);
+        });
 
     return newSets;
 }
 
-export async function updateSets(sets){
+export async function updateSets(sets) {
 
     sets.map(s => {
         return fetch(`${config.API_ENDPOINT}/api/sets/${s.id}`, {
             method: 'PATCH',
             body: JSON.stringify(s),
             headers: {
-              'content-type': 'application/json'
+                'content-type': 'application/json'
             }
-          })
-          .catch(error => {
-              this.setState({ error });
-          });
+        })
+            .catch(error => {
+                this.setState({ error });
+            });
     });
+}
+
+export async function deleteSets(setId) {
+    fetch(`${config.API_ENDPOINT}/api/sets/${setId}`, {
+        method: 'DELETE'
+    })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(error => {
+                    throw error;
+                })
+            }
+            return res;
+        })
+        .catch(error => {
+            console.error(error);
+        })
+
 }

@@ -36,7 +36,7 @@ export default class Nav extends React.Component{
                     onClick={this.handleLinkClick}>
                         Home
                 </Link>
-                <Link
+                {/* <Link
                     to='/register'
                     onClick={this.handleLinkClick}>
                         Register
@@ -45,7 +45,7 @@ export default class Nav extends React.Component{
                     to='/login'
                     onClick={this.handleLinkClick}>
                         Login
-                </Link>
+                </Link> */}
             </div>
         );
     }
@@ -58,11 +58,11 @@ export default class Nav extends React.Component{
                     onClick={this.handleLinkClick}>
                         Home
                 </Link>
-                <Link
+                {/* <Link
                     to='/logout'
                     onClick={this.handleLinkClick}>
                         Log out
-                </Link>
+                </Link> */}
             </div>
         );
     }

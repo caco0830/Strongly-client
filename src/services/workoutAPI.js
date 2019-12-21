@@ -78,7 +78,7 @@ export async function createWorkout(workout){
     return newWorkout;
 }
 
-export async function updateWorkout(workout){
+export function updateWorkout(workout){
 
     fetch(`${config.API_ENDPOINT}/api/workouts/${workout.id}`, {
       method: 'PATCH',
@@ -92,7 +92,7 @@ export async function updateWorkout(workout){
     });
 }
 
-export async function deleteWorkout(workout){
+export function deleteWorkout(workout){
     fetch(`${config.API_ENDPOINT}/api/workouts/${workout.id}`, {
         method: 'DELETE' 
     })

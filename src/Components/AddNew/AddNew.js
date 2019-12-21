@@ -4,8 +4,8 @@ import './AddNew.css';
 import uuid from 'uuid/v4';
 import { getSets } from '../../helper';
 import {getWorkoutById, createWorkout, updateWorkout} from '../../services/workoutAPI';
-import {getExercisesByWorkoutId, createExercises, updateExercises} from '../../services/exercisesAPI';
-import {getSetsByWorkoutId, createSets, updateSets} from '../../services/setsAPI';
+import {getExercisesByWorkoutId, createExercises, updateExercises, deleteExercises} from '../../services/exercisesAPI';
+import {getSetsByWorkoutId, createSets, updateSets, deleteSets} from '../../services/setsAPI';
 
 class AddNew extends Component {
 
@@ -83,16 +83,12 @@ class AddNew extends Component {
 
     if(this.props.match.params.workoutId) {
       await this.patchWorkouts();
-      await this.upsertExercises();
-      await this.upsertSets();
-      await this.props.history.push('/home');
     } else {
-      //this.postWorkout();
       await this.postWorkout();
-      await this.postExercises();
-      await this.postSets();
-      await this.props.history.push('/home');
     }
+    await this.upsertExercises();
+    await this.upsertSets();
+    await this.props.history.push('/home');
   }
 
   async postWorkout() {
@@ -101,42 +97,6 @@ class AddNew extends Component {
 
     let newWorkout = await createWorkout(workout);
     this.context.addWorkout(newWorkout);
-  }
-
-  async postExercises() {
-    const exercises = this.state.exercises;
-    const workoutId = this.props.match.params.workoutId;
-    const exercisesToCreate = [];
-
-    if(exercises.length > 0){
-      exercises.forEach(ex => {
-        exercisesToCreate.push({title: ex.title, id: ex.id, workout_id: ex.workout_id})
-      })
-
-      let newExercises = await createExercises(exercisesToCreate);
-      this.context.addExercise(newExercises, workoutId);
-  }
-  }
-
-  async postSets() {
-    const workoutId = this.props.match.params.workoutId;
-    const sets = this.state.sets;
-    const setsToCreate = [];
-
-    if (sets.length > 0) {
-      sets.forEach(s => {
-        setsToCreate.push({
-          exercise_id: s.exercise_id,
-          id: s.id,
-          reps: s.reps,
-          weight: s.weight,
-          workout_id: s.workout_id
-        });
-      });
-
-      let newSets = await createSets(setsToCreate);
-      this.context.addSet(newSets, workoutId);
-    }
   }
 
   async patchWorkouts() {
@@ -240,18 +200,31 @@ class AddNew extends Component {
     });
   }
 
-  handleRemoveSet = (setId) => {
-    this.setState({
+  async handleRemoveSet(e, setId) {
+    e.preventDefault();
+    const workoutId = this.props.match.params.workoutId;
+    deleteSets(setId);
+
+    await this.setState({
       sets: this.state.sets.filter(set => set.id !== setId)
     });
+
+    const sets = this.state.sets;
+
+    this.context.addSet(sets, workoutId);
   }
 
-  handleRemoveExercise(e, exId) {
+  async handleRemoveExercise(e, exId) {
     e.preventDefault();
-
-    this.setState({
+    const workoutId = this.props.match.params.workoutId;
+    deleteExercises(exId);
+    
+    await this.setState({
       exercises: this.state.exercises.filter(ex => ex.id !== exId)
     });
+
+    const exercises = this.state.exercises;
+    this.context.addExercise(exercises, workoutId);
   }
 
   renderExercises(exercises) {
@@ -268,6 +241,7 @@ class AddNew extends Component {
                 name='exercise-name'
                 value={ex.title}
                 onChange={e => this.updateExerciseName(e.target.value, index)}
+                required
               />
               <button onClick={e => this.handleRemoveExercise(e, ex.id)}>Remove</button>
               {this.renderSets(sets, ex.id)}
@@ -297,19 +271,21 @@ class AddNew extends Component {
               <div key={`set-${set.id}`} className='AddNew__sets-entry'>
                 <div>{index + 1}</div>
                 <input
-                  type='text'
+                  type='number'
                   name='set-reps'
                   value={set.reps}
                   onChange={e => this.updateSetReps(e.target.value, set.id)}
+                  required
                 />
                 <input
-                  type='text'
+                  type='number'
                   name='set-weight'
                   value={set.weight}
                   onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
+                  required
                 />
 
-                <button onClick={() => this.handleRemoveSet(set.id)}>Remove</button>
+                <button onClick={e => this.handleRemoveSet(e, set.id)}>Remove</button>
               </div>
             );
           })
@@ -331,6 +307,7 @@ class AddNew extends Component {
             name="name"
             value={this.state.workout.title}
             onChange={e => this.nameChange(e.target.value)}
+            required
           />
           {this.renderExercises(exercises)}
         </div>
