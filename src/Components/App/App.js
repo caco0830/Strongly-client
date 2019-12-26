@@ -8,7 +8,8 @@ import AddNew from '../AddNew/AddNew';
 import RegistrationForm from '../RegistrationForm/RegistrationForm';
 import WorkoutPage from '../WorkoutPage/WorkoutPage';
 import AppContext from '../../AppContext';
-//import config from '../../config';
+import PrivateRoute from '../Utils/PrivateRoute';
+import PublicOnlyRoute from '../Utils/PublicOnlyRoute';
 import {getAllWorkouts} from '../../services/workoutAPI';
 import {getAllExercises} from '../../services/exercisesAPI';
 import {getAllSets} from '../../services/setsAPI';
@@ -115,32 +116,32 @@ class App extends Component{
                 path='/'
                 component={LandingPage}
               />
-              <Route
+              <PublicOnlyRoute
                 exact
                 path='/login'
                 component={LoginPage}
               />
-              <Route
+              <PublicOnlyRoute
                 exact
                 path='/register'
                 component={RegistrationForm}
               />
-              <Route
+              <PrivateRoute
                 exact
                 path='/home'
                 component={ListPage}
               />
-              <Route
+              <PrivateRoute
                 exact
                 path='/addNew'
                 component={AddNew}
               />
-              <Route
+              <PrivateRoute
                 exact
                 path='/workout/:workoutId/edit'
                 component={AddNew}
               />
-              <Route 
+              <PrivateRoute
                 exact
                 path='/workout/:workoutId'
                 component={WorkoutPage}/>

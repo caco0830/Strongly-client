@@ -1,11 +1,15 @@
 import config from '../config';
+import TokenService from '../services/token-service';
 
 export async function getAllWorkouts() {
 
     let workouts = [];
 
     await fetch(`${config.API_ENDPOINT}/api/workouts`, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
         .then(res => {
             if (!res.ok) {
@@ -29,7 +33,10 @@ export async function getWorkoutById(id) {
     let workout = [];
 
     await fetch(`${config.API_ENDPOINT}/api/workouts/${id}`, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
         .then(res => {
             if (!res.ok) {
@@ -55,10 +62,11 @@ export async function createWorkout(workout){
     
     await fetch(`${config.API_ENDPOINT}/api/workouts`, {
         method: 'POST',
-        body: JSON.stringify(workout),
         headers:{
-            'content-type': 'application/json'
-        }
+            'content-type': 'application/json',
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        },
+        body: JSON.stringify(workout),
     })
     .then(res => {
         if(!res.ok){
@@ -82,10 +90,11 @@ export function updateWorkout(workout){
 
     fetch(`${config.API_ENDPOINT}/api/workouts/${workout.id}`, {
       method: 'PATCH',
-      body: JSON.stringify(workout),
       headers: {
-        'content-type': 'application/json'
-      }
+        'content-type': 'application/json',
+        'authorization': `basic ${TokenService.getAuthToken()}`
+      },
+      body: JSON.stringify(workout),
     })
     .catch(error => {
         this.setState({ error });
@@ -94,7 +103,10 @@ export function updateWorkout(workout){
 
 export function deleteWorkout(workout){
     fetch(`${config.API_ENDPOINT}/api/workouts/${workout.id}`, {
-        method: 'DELETE' 
+        method: 'DELETE',
+        headers:{
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        } 
     })
     .then(res => {
         if(!res.ok){

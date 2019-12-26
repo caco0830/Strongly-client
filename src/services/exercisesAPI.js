@@ -1,26 +1,30 @@
 import config from '../config';
+import TokenService from '../services/token-service';
 
 export async function getAllExercises() {
 
     let exercises = [];
 
     await fetch(`${config.API_ENDPOINT}/api/exercises`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
-        .then(res => {
-            if (!res.ok) {
-                return res.json().then(error => {
-                    throw error;
-                });
-            }
-            return res.json();
-        })
-        .then(data => {
-            exercises = data;
-        })
-        .catch(error => {
-            console.error(error);
-        })
+    .then(res => {
+        if (!res.ok) {
+            return res.json().then(error => {
+                throw error;
+            });
+        }
+        return res.json();
+    })
+    .then(data => {
+        exercises = data;
+    })
+    .catch(error => {
+        console.error(error);
+    })
 
     return exercises;
 }
@@ -29,7 +33,10 @@ export async function getExercisesByWorkoutId(workoutId) {
     let exercises = [];
 
     await fetch(`${config.API_ENDPOINT}/api/exercises?workout_id=${workoutId}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
         .then(res => {
             if (!res.ok) {
@@ -57,7 +64,8 @@ export async function createExercises(exercises) {
         method: 'POST',
         body: JSON.stringify(exercises),
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'authorization': `basic ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -85,7 +93,8 @@ export async function updateExercises(exercises) {
             method: 'PATCH',
             body: JSON.stringify(ex),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'authorization': `basic ${TokenService.getAuthToken()}`
             }
         })
             .catch(error => {
@@ -97,7 +106,10 @@ export async function updateExercises(exercises) {
 export function deleteExercises(exerciseId) {
 
     return fetch(`${config.API_ENDPOINT}/api/exercises/${exerciseId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
         .then(res => {
             if (!res.ok) {

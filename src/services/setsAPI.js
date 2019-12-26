@@ -1,11 +1,15 @@
 import config from '../config';
+import TokenService from '../services/token-service';
 
 export async function getAllSets() {
 
     let sets = [];
 
     await fetch(`${config.API_ENDPOINT}/api/sets`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
         .then(res => {
             if (!res.ok) {
@@ -29,7 +33,10 @@ export async function getSetsByWorkoutId(workoutId) {
     let sets = [];
 
     await fetch(`${config.API_ENDPOINT}/api/sets?workout_id=${workoutId}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
         .then(res => {
             if (!res.ok) {
@@ -58,7 +65,8 @@ export async function createSets(sets) {
         method: 'POST',
         body: JSON.stringify(sets),
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'authorization': `basic ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -86,7 +94,8 @@ export async function updateSets(sets) {
             method: 'PATCH',
             body: JSON.stringify(s),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'authorization': `basic ${TokenService.getAuthToken()}`
             }
         })
             .catch(error => {
@@ -97,7 +106,10 @@ export async function updateSets(sets) {
 
 export async function deleteSets(setId) {
     fetch(`${config.API_ENDPOINT}/api/sets/${setId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'authorization': `basic ${TokenService.getAuthToken()}`
+        }
     })
         .then(res => {
             if (!res.ok) {
