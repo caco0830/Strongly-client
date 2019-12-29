@@ -8,7 +8,7 @@ export async function getAllExercises() {
     await fetch(`${config.API_ENDPOINT}/api/exercises`, {
         method: 'GET',
         headers: {
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
     .then(res => {
@@ -35,7 +35,7 @@ export async function getExercisesByWorkoutId(workoutId) {
     await fetch(`${config.API_ENDPOINT}/api/exercises?workout_id=${workoutId}`, {
         method: 'GET',
         headers: {
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -65,7 +65,7 @@ export async function createExercises(exercises) {
         body: JSON.stringify(exercises),
         headers: {
             'content-type': 'application/json',
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -94,7 +94,7 @@ export async function updateExercises(exercises) {
             body: JSON.stringify(ex),
             headers: {
                 'content-type': 'application/json',
-                'authorization': `basic ${TokenService.getAuthToken()}`
+                'authorization': `bearer ${TokenService.getAuthToken()}`
             }
         })
             .catch(error => {
@@ -108,7 +108,7 @@ export function deleteExercises(exerciseId) {
     return fetch(`${config.API_ENDPOINT}/api/exercises/${exerciseId}`, {
         method: 'DELETE',
         headers: {
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -121,7 +121,4 @@ export function deleteExercises(exerciseId) {
         .catch(error => {
             console.error(error);
         });
-
-
-
 }

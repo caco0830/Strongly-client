@@ -8,7 +8,7 @@ export async function getAllSets() {
     await fetch(`${config.API_ENDPOINT}/api/sets`, {
         method: 'GET',
         headers: {
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -35,7 +35,7 @@ export async function getSetsByWorkoutId(workoutId) {
     await fetch(`${config.API_ENDPOINT}/api/sets?workout_id=${workoutId}`, {
         method: 'GET',
         headers: {
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -66,7 +66,7 @@ export async function createSets(sets) {
         body: JSON.stringify(sets),
         headers: {
             'content-type': 'application/json',
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -95,7 +95,7 @@ export async function updateSets(sets) {
             body: JSON.stringify(s),
             headers: {
                 'content-type': 'application/json',
-                'authorization': `basic ${TokenService.getAuthToken()}`
+                'authorization': `bearer ${TokenService.getAuthToken()}`
             }
         })
             .catch(error => {
@@ -108,7 +108,7 @@ export async function deleteSets(setId) {
     fetch(`${config.API_ENDPOINT}/api/sets/${setId}`, {
         method: 'DELETE',
         headers: {
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {

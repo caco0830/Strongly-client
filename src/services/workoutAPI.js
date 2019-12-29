@@ -8,7 +8,7 @@ export async function getAllWorkouts() {
     await fetch(`${config.API_ENDPOINT}/api/workouts`, {
         method: 'GET',
         headers:{
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -35,7 +35,7 @@ export async function getWorkoutById(id) {
     await fetch(`${config.API_ENDPOINT}/api/workouts/${id}`, {
         method: 'GET',
         headers:{
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         }
     })
         .then(res => {
@@ -64,7 +64,7 @@ export async function createWorkout(workout){
         method: 'POST',
         headers:{
             'content-type': 'application/json',
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         },
         body: JSON.stringify(workout),
     })
@@ -92,7 +92,7 @@ export function updateWorkout(workout){
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        'authorization': `basic ${TokenService.getAuthToken()}`
+        'authorization': `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify(workout),
     })
@@ -105,7 +105,7 @@ export function deleteWorkout(workout){
     fetch(`${config.API_ENDPOINT}/api/workouts/${workout.id}`, {
         method: 'DELETE',
         headers:{
-            'authorization': `basic ${TokenService.getAuthToken()}`
+            'authorization': `bearer ${TokenService.getAuthToken()}`
         } 
     })
     .then(res => {

@@ -59,7 +59,7 @@ export default class Nav extends React.Component{
         return (
             <div className='Header__menu-items'>
                 <Link
-                    to='/'
+                    to='/home'
                     onClick={this.handleLinkClick}>
                         Home
                 </Link>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import TokenService from '../../services/token-service';
+import AuthApiService from '../../services/authAPI';
 import './LoginPage.css';
 
 class LoginPage extends Component{
@@ -11,23 +12,34 @@ class LoginPage extends Component{
 
     state = {error: null}
 
-    handleSubmitBasicAuth = ev => {
+    handleSubmitJwtAuth = ev => {
         ev.preventDefault();
+        this.setState({error: null});
         const {username, password} = ev.target;
-        TokenService.saveAuthToken(
-            TokenService.makeBasicAuthToken(username.value, password.value)
-        );
 
-        username.value ='';
-        password.value = '';
-
-        this.props.history.push('/home')
-
+        AuthApiService.postLogin({
+            username: username.value,
+            password: password.value
+        })
+        .then(res => {
+            username.value = '';
+            password.value = '';
+            TokenService.saveAuthToken(res.authToken);
+            this.props.onLoginSuccess();
+            this.props.history.push('/home')
+        })
+        .catch(res => {
+            this.setState({error: res.error});
+        });
     }
 
     render(){
+        const {error} = this.state;
         return (
-            <form onSubmit={this.handleSubmitBasicAuth}>
+            <form onSubmit={this.handleSubmitJwtAuth}>
+                <div role='alert'>
+                    {error && <p className='red'>{error}</p>}
+                </div>
                 <div>
                     <label htmlFor="username">Email/Username</label>
                     <input placeholder="email@example.com" type="text" name='username' />
