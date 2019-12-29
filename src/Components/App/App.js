@@ -26,7 +26,7 @@ class App extends Component{
 
 
   async componentDidMount(){
-    
+
     if(TokenService.hasAuthToken()){
       const workouts = await getAllWorkouts();
       const exercises = await getAllExercises();
@@ -34,9 +34,6 @@ class App extends Component{
 
       this.setState({workouts, exercises, sets});
     }
-
-
-    
   }
 
   handleAddWorkout = workout => {
@@ -79,6 +76,22 @@ class App extends Component{
     });
   }
 
+  onLogoutSuccess = () => {
+    this.setState({
+      workouts: [],
+      exercises: [],
+      sets: []
+    })
+  }
+
+  onLoginSuccess = async () => {
+    const workouts = await getAllWorkouts();
+      const exercises = await getAllExercises();
+      const sets = await getAllSets();
+
+      this.setState({workouts, exercises, sets});
+  }
+
   render(){
     const value = {
       workouts: this.state.workouts,
@@ -87,7 +100,9 @@ class App extends Component{
       addWorkout: this.handleAddWorkout,
       addExercise: this.handleAddExercise,
       addSet: this.handleAddSets,
-      deleteWorkout: this.handleDeleteWorkout
+      deleteWorkout: this.handleDeleteWorkout,
+      onLogoutSuccess: this.onLogoutSuccess,
+      onLoginSuccess: this.onLoginSuccess
     }
 
     return (

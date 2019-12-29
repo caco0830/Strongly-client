@@ -49,7 +49,7 @@ class RegistrationForm extends Component{
                     <input name='password' type="password" id="RegistrationForm_password" required/>
                 </div>
 
-                <button type="submit" >Register</button>
+                <button type="submit">Register</button>
             </form>
         );
     }

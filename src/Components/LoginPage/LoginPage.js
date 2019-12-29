@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import AppContext from '../../AppContext';
 import TokenService from '../../services/token-service';
 import AuthApiService from '../../services/authAPI';
 import './LoginPage.css';
 
 class LoginPage extends Component{
-
-    static defaultProps = {
-        onLoginSuccess: () => {}
-    }
+    static contextType = AppContext;
 
     state = {error: null}
 
@@ -25,7 +23,7 @@ class LoginPage extends Component{
             username.value = '';
             password.value = '';
             TokenService.saveAuthToken(res.authToken);
-            this.props.onLoginSuccess();
+            this.context.onLoginSuccess();
             this.props.history.push('/home')
         })
         .catch(res => {

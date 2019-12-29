@@ -7,5 +7,7 @@ export default React.createContext({
     addWorkout: () => {},
     addExercise: () => {},
     addSet: () => {},
-    deleteWorkout: () => {} 
+    deleteWorkout: () => {},
+    onLogoutSuccess: () => {},
+    onLoginSuccess: () => {} 
 });

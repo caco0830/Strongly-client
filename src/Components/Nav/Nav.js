@@ -1,11 +1,12 @@
 import React from 'react';
+import AppContext from '../../AppContext';
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import TokenService from '../../services/token-service';
 import './Nav.css';
 
 export default class Nav extends React.Component{
-
+    static contextType = AppContext;
     constructor(props){
         super(props);
         this.state = {
@@ -25,6 +26,7 @@ export default class Nav extends React.Component{
 
     handleLogoutClick = () => {
         TokenService.clearAuthToken();
+        this.context.onLogoutSuccess();
         this.setState({menuOpen: false});
     }
 
