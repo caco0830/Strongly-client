@@ -26,7 +26,7 @@ class ListPage extends Component {
                     this.context.loading
                         ? <Loader />
                         : <div><Link to='/addNew'>
-                            <button>Log new exercise</button>
+                            <button>Log new workout</button>
                         </Link>
                             {this.renderWorkouts()}</div>
                 }
