@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import {Switch} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import ListPage from '../ListPage/ListPage';
@@ -11,41 +12,43 @@ import AppContext from '../../AppContext';
 import PrivateRoute from '../Utils/PrivateRoute';
 import PublicOnlyRoute from '../Utils/PublicOnlyRoute';
 import TokenService from '../../services/token-service';
-import {getAllWorkouts} from '../../services/workoutAPI';
-import {getAllExercises} from '../../services/exercisesAPI';
-import {getAllSets} from '../../services/setsAPI';
+import { getAllWorkouts } from '../../services/workoutAPI';
+import { getAllExercises } from '../../services/exercisesAPI';
+import { getAllSets } from '../../services/setsAPI';
 
-class App extends Component{
 
-  state= {
+class App extends Component {
+
+  state = {
     workouts: [],
     exercises: [],
-    sets: []
+    sets: [],
+    loading: true
   }
   //move initial calls to ListPage or the call can only be made if user is logged in.
 
 
-  async componentDidMount(){
+  async componentDidMount() {
 
-    if(TokenService.hasAuthToken()){
+    if (TokenService.hasAuthToken()) {
       const workouts = await getAllWorkouts();
       const exercises = await getAllExercises();
       const sets = await getAllSets();
 
-      this.setState({workouts, exercises, sets});
+      this.setState({ workouts, exercises, sets, loading: false });
     }
   }
 
   handleAddWorkout = workout => {
     const workouts = this.state.workouts;
     const index = workouts.findIndex(w => w.id === workout.id);
-    
-    if(index > -1){
+
+    if (index > -1) {
       workouts[index] = workout;
-    }else{  
+    } else {
       workouts.push(workout);
     }
-    
+
     this.setState({
       workouts
     });
@@ -64,7 +67,7 @@ class App extends Component{
   handleAddSets = (sets, workoutId) => {
     let setList = this.state.sets.filter(set => set.workout_id !== workoutId);
     setList = [...setList, ...sets];
- 
+
     this.setState({
       sets: setList
     });
@@ -86,13 +89,25 @@ class App extends Component{
 
   onLoginSuccess = async () => {
     const workouts = await getAllWorkouts();
-      const exercises = await getAllExercises();
-      const sets = await getAllSets();
+    const exercises = await getAllExercises();
+    const sets = await getAllSets();
 
-      this.setState({workouts, exercises, sets});
+    this.setState({ workouts, exercises, sets });
   }
 
-  render(){
+  isLoading = () => {
+    this.setState({
+      loading: true
+    });
+  }
+
+  hasLoaded = () => {
+    this.setState({
+      loading: false
+    });
+  }
+
+  render() {
     const value = {
       workouts: this.state.workouts,
       exercises: this.state.exercises,
@@ -102,7 +117,10 @@ class App extends Component{
       addSet: this.handleAddSets,
       deleteWorkout: this.handleDeleteWorkout,
       onLogoutSuccess: this.onLogoutSuccess,
-      onLoginSuccess: this.onLoginSuccess
+      onLoginSuccess: this.onLoginSuccess,
+      isLoading: this.isLoading,
+      hasLoaded: this.hasLoaded,
+      loading: this.state.loading
     }
 
     return (
@@ -113,7 +131,7 @@ class App extends Component{
           </header>
           <main className='App'>
             <Switch>
-              <PublicOnlyRoute
+              <Route
                 exact
                 path='/'
                 component={LandingPage}
@@ -146,10 +164,10 @@ class App extends Component{
               <PrivateRoute
                 exact
                 path='/workout/:workoutId'
-                component={WorkoutPage}/>
+                component={WorkoutPage} />
             </Switch>
           </main>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </AppContext.Provider>
     );

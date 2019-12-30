@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import WorkoutCard from '../WorkoutCard/WorkoutCard';
+import Loader from '../Loader/Loader';
 import './ListPage.css';
 import AppContext from '../../AppContext';
 
 class ListPage extends Component {
 
     static contextType = AppContext;
-    
-    renderWorkouts(){
+
+    renderWorkouts() {
         let workouts = this.context.workouts;
 
         return (
@@ -21,11 +22,14 @@ class ListPage extends Component {
     render() {
         return (
             <div className="workout">
-                <Link to='/addNew'>
-                    <button>Log new exercise</button>
-                </Link>
-                {this.renderWorkouts()}
-                
+                {
+                    this.context.loading
+                        ? <Loader />
+                        : <div><Link to='/addNew'>
+                            <button>Log new exercise</button>
+                        </Link>
+                            {this.renderWorkouts()}</div>
+                }
             </div>
         );
     }

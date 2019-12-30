@@ -9,5 +9,8 @@ export default React.createContext({
     addSet: () => {},
     deleteWorkout: () => {},
     onLogoutSuccess: () => {},
-    onLoginSuccess: () => {} 
+    onLoginSuccess: () => {},
+    isLoading: () => {},
+    hasLoaded: () => {},
+    loading: null
 });

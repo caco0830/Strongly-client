@@ -3,9 +3,10 @@ import AppContext from '../../AppContext';
 import './AddNew.css';
 import uuid from 'uuid/v4';
 import { getSets } from '../../helper';
-import {getWorkoutById, createWorkout, updateWorkout} from '../../services/workoutAPI';
-import {getExercisesByWorkoutId, createExercises, updateExercises, deleteExercises} from '../../services/exercisesAPI';
-import {getSetsByWorkoutId, createSets, updateSets, deleteSets} from '../../services/setsAPI';
+import Loader from '../Loader/Loader';
+import { getWorkoutById, createWorkout, updateWorkout } from '../../services/workoutAPI';
+import { getExercisesByWorkoutId, createExercises, updateExercises, deleteExercises } from '../../services/exercisesAPI';
+import { getSetsByWorkoutId, createSets, updateSets, deleteSets } from '../../services/setsAPI';
 
 class AddNew extends Component {
 
@@ -29,12 +30,12 @@ class AddNew extends Component {
 
   async componentDidMount() {
     if (this.props.match.params.workoutId) {
-
+      this.context.isLoading();
       const workoutId = this.props.match.params.workoutId;
       const workout = await getWorkoutById(workoutId);
       const exercises = await getExercisesByWorkoutId(workoutId);
       const sets = await getSetsByWorkoutId(workoutId);
-
+      this.context.hasLoaded();
       this.setState({
         workout,
         exercises,
@@ -81,7 +82,7 @@ class AddNew extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(this.props.match.params.workoutId) {
+    if (this.props.match.params.workoutId) {
       await this.patchWorkouts();
     } else {
       await this.postWorkout();
@@ -115,23 +116,23 @@ class AddNew extends Component {
     if (exercises.length > 0) {
 
       exercises.forEach(ex => {
-        if(ex.isNew === true){
+        if (ex.isNew === true) {
           const e = {
             id: ex.id,
             title: ex.title,
             workout_id: ex.workout_id
           }
           exercisesToCreate.push(e);
-        }else{
+        } else {
           exercisesToUpdate.push(ex);
         }
       });
 
-      if(exercisesToUpdate.length > 0){
+      if (exercisesToUpdate.length > 0) {
         await updateExercises(exercisesToUpdate);
       }
 
-      if(exercisesToCreate.length > 0){
+      if (exercisesToCreate.length > 0) {
         await createExercises(exercisesToCreate);
       }
 
@@ -139,34 +140,34 @@ class AddNew extends Component {
     }
   }
 
-  async upsertSets(){
+  async upsertSets() {
     const sets = this.state.sets;
     const workoutId = this.props.match.params.workoutId;
 
     const setsToCreate = [];
     const setsToUpdate = [];
 
-    if(sets.length > 0){
+    if (sets.length > 0) {
 
       sets.forEach(s => {
-          if(s.isNew === true){
-            setsToCreate.push({
-              exercise_id: s.exercise_id,
-              id: s.id,
-              reps: s.reps,
-              weight: s.weight,
-              workout_id: s.workout_id
-            });
-          }else{
-            setsToUpdate.push(s);
-          }
+        if (s.isNew === true) {
+          setsToCreate.push({
+            exercise_id: s.exercise_id,
+            id: s.id,
+            reps: s.reps,
+            weight: s.weight,
+            workout_id: s.workout_id
+          });
+        } else {
+          setsToUpdate.push(s);
+        }
       });
 
-      if(setsToUpdate.length > 0){
+      if (setsToUpdate.length > 0) {
         await updateSets(setsToUpdate);
       }
 
-      if(setsToCreate.length > 0){
+      if (setsToCreate.length > 0) {
         await createSets(setsToCreate);
       }
 
@@ -218,7 +219,7 @@ class AddNew extends Component {
     e.preventDefault();
     const workoutId = this.props.match.params.workoutId;
     deleteExercises(exId);
-    
+
     await this.setState({
       exercises: this.state.exercises.filter(ex => ex.id !== exId)
     });
@@ -300,19 +301,23 @@ class AddNew extends Component {
     return (
 
       <form onSubmit={this.handleSubmit}>
-        <div className='AddNew__workout'>
-          <label htmlFor="name">Name: </label>
-          <input
-            type="text"
-            name="name"
-            value={this.state.workout.title}
-            onChange={e => this.nameChange(e.target.value)}
-            required
-          />
-          {this.renderExercises(exercises)}
-        </div>
-        <button type="submit">Save</button>
-        <button type="cancel" onClick={this.handleCancel}>Cancel</button>
+        {
+          this.context.loading
+            ? <Loader />
+            : <div className='AddNew__workout'>
+              <label htmlFor="name">Name: </label>
+              <input
+                type="text"
+                name="name"
+                value={this.state.workout.title}
+                onChange={e => this.nameChange(e.target.value)}
+                required
+              />
+              {this.renderExercises(exercises)}
+              <button type="submit">Save</button>
+              <button type="cancel" onClick={this.handleCancel}>Cancel</button>
+            </div>
+        }
       </form >
     );
   }
