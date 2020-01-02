@@ -15,7 +15,8 @@ class WorkoutPage extends React.Component {
     workout: [],
     exercises: [],
     sets: [],
-    createdDate: ''
+    createdDate: '',
+    confirmDelete: false
   }
 
   async componentDidMount() {
@@ -35,7 +36,6 @@ class WorkoutPage extends React.Component {
       sets,
     });
   }
-
 
   handleDelete = async (e) => {
     e.preventDefault();
@@ -90,7 +90,8 @@ class WorkoutPage extends React.Component {
               </div>
               <Link to={`${workoutId}/edit`}><button>Edit</button></Link>
 
-              <button type='button' onClick={this.handleDelete}>Delete</button>
+              {/* <button type='button' onClick={this.handleDelete}>Delete</button> */}
+              <button type='button' onClick={e => window.confirm("Are you sure?") && this.handleDelete(e)}>Delete</button>
             </div>
         }
       </div>);

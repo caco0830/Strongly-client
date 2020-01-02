@@ -92,7 +92,7 @@ class App extends Component {
     const exercises = await getAllExercises();
     const sets = await getAllSets();
 
-    this.setState({ workouts, exercises, sets });
+    this.setState({ workouts, exercises, sets, loading: false });
   }
 
   isLoading = () => {
@@ -131,7 +131,7 @@ class App extends Component {
           </header>
           <main className='App'>
             <Switch>
-              <Route
+              <PublicOnlyRoute
                 exact
                 path='/'
                 component={LandingPage}

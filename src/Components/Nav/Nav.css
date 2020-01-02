@@ -2,10 +2,18 @@ h1{
     margin: 0;
 }
 .Header{
-    background-color: lightgrey;
+    background-color: #2F80ED;
     display: flex;
     justify-content: space-around;
     flex-direction: row;
+    color: white;
+    height: 56px;
+    font-weight: 200;
+}
+
+.Header > a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .Header__not-logged-in{

@@ -78,8 +78,8 @@ export default class Nav extends React.Component{
         return(
             <div>
                 <nav className='Header'>
-                        <Link to='/home' onClick={this.handleLinkClick}>
-                            <h1>Strongly</h1>
+                        <Link to='/' onClick={this.handleLinkClick}>
+                            <p>Strongly</p>
                         </Link>
                     
                     <button type="button" onClick={() => this.handleMenuClick()}>

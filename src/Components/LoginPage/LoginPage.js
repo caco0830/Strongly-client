@@ -39,7 +39,7 @@ class LoginPage extends Component{
                     {error && <p className='red'>{error}</p>}
                 </div>
                 <div>
-                    <label htmlFor="username">Email/Username</label>
+                    <label htmlFor="username">Username</label>
                     <input placeholder="email@example.com" type="text" name='username' />
                 </div>
                 <div>
