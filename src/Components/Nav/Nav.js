@@ -1,8 +1,8 @@
 import React from 'react';
 import AppContext from '../../AppContext';
 import {Link} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import TokenService from '../../services/token-service';
+import MenuIcon from '@material-ui/icons/Menu';
 import './Nav.css';
 
 export default class Nav extends React.Component{
@@ -39,16 +39,19 @@ export default class Nav extends React.Component{
         return (
             <div className='Header__menu-items'>
                 <Link
+                    className="menu-item" 
                     to='/home'
                     onClick={this.handleLinkClick}>
                         Home
                 </Link>
                 <Link
+                    className="menu-item" 
                     to='/register'
                     onClick={this.handleLinkClick}>
                         Register
                 </Link>
                 <Link
+                    className="menu-item" 
                     to='/login'
                     onClick={this.handleLinkClick}>
                         Login
@@ -59,18 +62,25 @@ export default class Nav extends React.Component{
 
     renderLogoutLink() {
         return (
-            <div className='Header__menu-items'>
-                <Link
-                    to='/home'
-                    onClick={this.handleLinkClick}>
-                        Home
-                </Link>
-                <Link
-                    to='/'
-                    onClick={this.handleLogoutClick}>
-                        Log out
-                </Link>
-            </div>
+                <div className='Header__menu'>
+                    <div className='Header__menu-items'>
+                        <Link
+                            className="menu-item" 
+                            to='/home'
+                            onClick={this.handleLinkClick}>
+                                Home
+                        </Link>
+                        <Link
+                            className="menu-item" 
+                            to='/'
+                            onClick={this.handleLogoutClick}>
+                                Logout
+                        </Link>
+                        
+                    </div>
+                    <div class='Header__menu-items-background'></div>
+                </div>
+            
         );
     }
 
@@ -78,13 +88,11 @@ export default class Nav extends React.Component{
         return(
             <div>
                 <nav className='Header'>
-                        <Link to='/' onClick={this.handleLinkClick}>
-                            <p>Strongly</p>
-                        </Link>
-                    
-                    <button type="button" onClick={() => this.handleMenuClick()}>
-                        <FontAwesomeIcon className='green' icon='bars'/>
-                    </button>
+                    <MenuIcon onClick={() => this.handleMenuClick()} className='menu-icon Header__child'/>
+ 
+                    <Link className='Header__child' to='/' onClick={this.handleLinkClick}>
+                        <p>Strongly</p>
+                    </Link>
                 </nav>
                 {this.state.menuOpen ? this.renderMenu() : ''}
             </div>

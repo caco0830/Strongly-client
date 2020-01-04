@@ -2,7 +2,7 @@
     box-sizing: border-box;
     display:flex;
     flex-direction: column;
-    background-color: lightgrey;
+    background-color: #FAFAFA;
     border-radius: 4px;
     padding: 10px;
     max-width: 400px;
@@ -13,6 +13,7 @@
     padding: 10px;
     text-align: left;
     text-decoration: none;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
 
 .WorkoutCard__name{
