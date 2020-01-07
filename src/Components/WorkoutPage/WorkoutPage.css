@@ -1,29 +1,108 @@
 .WorkoutPage{
     padding: 10px;
-    margin: auto;
     max-width: 500px;
+    text-align: left;
 }
 
 .WorkoutPage ul{
     list-style-type: none;
 }
 
-.WorkoutPage__exercises{
-    max-width: 400px;
-    margin: auto;
+.WorkoutPage__Main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.WorkoutPage__exercises{
-    text-align: left;
+
+.WorkoutPage__Name{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
 }
 
-.WorkoutPage__setList{
+.WorkoutPage__Date{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.WorkoutPage__WorkoutDetails{
+    margin-left: 37px;
+    margin-right: 37px;
+}
+
+.WorkoutPage__divider{
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    margin: 0 15px;
+    margin-bottom: 10px;
+}
+
+.WorkoutPage__exerciseCard{
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: column;
+    background-color: #FAFAFA;
+    border-radius: 4px;
+    padding: 10px;
     max-width: 400px;
-    margin: auto;
+    margin: 0 33px;
+    min-height: 100px;
+    margin-bottom: 10px;
     font-size: 15px;
+    padding: 10px;
     text-align: left;
+    text-decoration: none;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
 
-.WorkoutPage__set{
-    max-width: 400px;
+.WorkoutPage__exerciseCard-name{
+    font-size: 20px;
 }
+
+.WorkoutPage__buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.WorkoutPage__button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background: #E91E63;
+    color: white;
+    text-decoration: none;
+    width: 85px;
+    height: 36px;
+    margin-top: 10px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

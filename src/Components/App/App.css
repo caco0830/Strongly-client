@@ -1,4 +1,9 @@
+html, body { 
+    height: 100%;
+    position: relative;
+}
+
 .App__header{
     display: flex;
-    flex-direction: columns;
+    flex-direction: column;
 }

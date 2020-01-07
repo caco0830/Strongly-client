@@ -78,7 +78,7 @@ export default class Nav extends React.Component{
                         </Link>
                         
                     </div>
-                    <div class='Header__menu-items-background'></div>
+                    <div className='Header__menu-items-background'></div>
                 </div>
             
         );

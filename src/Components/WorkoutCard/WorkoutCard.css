@@ -6,7 +6,7 @@
     border-radius: 4px;
     padding: 10px;
     max-width: 400px;
-    margin: auto;
+    margin: 0 33px;
     min-height: 100px;
     margin-bottom: 10px;
     font-size: 15px;
@@ -17,18 +17,17 @@
 }
 
 .WorkoutCard__name{
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 24px;
 }
 
 .WorkoutCard__date{
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 2px;
 }
 
 .WorkoutCard header{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
 }
 

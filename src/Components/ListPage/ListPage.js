@@ -21,13 +21,14 @@ class ListPage extends Component {
 
     render() {
         return (
-            <div className="workout">
+            <div className="ListPage">
                 {
                     this.context.loading
                         ? <Loader />
-                        : <div><Link to='/addNew'>
-                            <button>Log new workout</button>
-                        </Link>
+                        : <div>
+                            <Link to='/addNew'>
+                                <div className="ListPage__addNew">ADD NEW WORKOUT</div>
+                            </Link>
                             {this.renderWorkouts()}</div>
                 }
             </div>

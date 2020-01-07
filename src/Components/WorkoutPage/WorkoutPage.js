@@ -65,33 +65,37 @@ class WorkoutPage extends React.Component {
         {
           this.context.loading
             ? <Loader />
-            : <div>
-              <h1>{workout.title}</h1>
-              <div>{createdDate ? format(createdDate, 'PPPP p') : ''}</div>
-              <div className='WorkoutPage__exercises'>
-                {exs.map(ex => {
-                  return (
-                    <div key={`ex-${ex.id}`}>
-                      <div className='WorkoutPage__exercises-name'>{ex.title}</div>
-                      <ul className='WorkoutPage__setList'>
-                        {
-                          getSets(sets, ex.id).map((set, idx) => {
-                            return (
-                              <li key={`${set.id}-${idx}`}>
-                                <div className='WorkoutPage__set'>{`${idx + 1}. ${set.weight} lbs x ${set.reps} reps`}</div>
-                              </li>
-                            )
-                          })
-                        }
-                      </ul>
-                    </div>
-                  )
-                })}
-              </div>
-              <Link to={`${workoutId}/edit`}><button>Edit</button></Link>
+            : <div className='WorkoutPage__Main'>
+                <div className='WorkoutPage__WorkoutDetails'>
+                  <div className='WorkoutPage__Name'>{workout.title}</div>
+                  <div className='WorkoutPage__Date'>{workout.createddate ? format(parseISO(workout.createddate), 'MMM d') : ''}</div>
+                </div>
+                <div className='WorkoutPage__divider'></div>
+                <div className='WorkoutPage__exercises'>
+                  {exs.map(ex => {
+                    return (
+                      <div key={`ex-${ex.id}`} className='WorkoutPage__exerciseCard'>
+                        <div className='WorkoutPage__exerciseCard-name'>{ex.title}</div>
+                        <ol className='WorkoutPage__setList'>
+                          {
+                            getSets(sets, ex.id).map((set, idx) => {
+                              return (
+                                <li key={`${set.id}-${idx}`}>
+                                  <div className='WorkoutPage__set'>{`${set.weight} lbs x ${set.reps} reps`}</div>
+                                </li>
+                              )
+                            })
+                          }
+                        </ol>
+                      </div>
+                    )
+                  })}
+                </div>
 
-              {/* <button type='button' onClick={this.handleDelete}>Delete</button> */}
-              <button type='button' onClick={e => window.confirm("Are you sure?") && this.handleDelete(e)}>Delete</button>
+                <div className="WorkoutPage__buttons">
+                  <Link to={`${workoutId}/edit`}><button className="WorkoutPage__button">Edit</button></Link>
+                  <button className="WorkoutPage__button" type='button' onClick={e => window.confirm("Are you sure?") && this.handleDelete(e)}>Delete</button>
+                </div>
             </div>
         }
       </div>);

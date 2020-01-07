@@ -3,6 +3,7 @@
     flex-direction: column;
     margin-top: 10px;
     font-weight: 12px;
+    font-weight: 500;
 }
 
 .ExerciseDisplay__headers, .ExerciseDisplay__exercise{
@@ -12,8 +13,16 @@
 }
 
 .ExerciseDisplay__headers {
-    font-weight: bold;
     font-size: 12px;
+    opacity: 56%;
+}
+
+.ExerciseDisplay__exercise, .ExerciseDisplay__headers{
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.ExerciseDisplay__exercise {
+    font-size: 13px;
 }
 
 

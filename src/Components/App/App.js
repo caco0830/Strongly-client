@@ -15,6 +15,7 @@ import TokenService from '../../services/token-service';
 import { getAllWorkouts } from '../../services/workoutAPI';
 import { getAllExercises } from '../../services/exercisesAPI';
 import { getAllSets } from '../../services/setsAPI';
+import './App.css'
 
 
 class App extends Component {
@@ -129,7 +130,7 @@ class App extends Component {
           <header className='App__header'>
             <Nav />
           </header>
-          <main className='App'>
+          <main className='App__Main'>
             <Switch>
               <PublicOnlyRoute
                 exact

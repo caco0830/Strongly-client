@@ -1,8 +1,30 @@
-.date{
-    background-color: lightgrey
-}
-
-.workout{
+.ListPage{
     max-width: 500px;
     margin: auto;
+}
+
+.ListPage a{
+    text-decoration: none;
+}
+
+.ListPage__addNew{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #E91E63;
+    color: white;
+    text-decoration: none;
+    width: 200px;
+    height: 36px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
 }
