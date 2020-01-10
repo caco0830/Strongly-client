@@ -6,6 +6,10 @@
     margin-right: auto;
 }
 
+.WorkoutPage a{
+    text-decoration: none;
+}
+
 .WorkoutPage ul{
     list-style-type: none;
 }
@@ -76,7 +80,7 @@
     justify-content: center;
     align-items: center;
 
-    background: #E91E63;
+    border: none;
     color: white;
     text-decoration: none;
     width: 85px;
@@ -89,6 +93,14 @@
     font-size: 14px;
     letter-spacing: 0.75px;
     text-transform: uppercase;
+}
+
+.WorkoutPage__Button-blue{
+    background: #2D9CDB;
+}
+
+.WorkoutPage__Button-red{
+    background: #E91E63;
 }
 
 

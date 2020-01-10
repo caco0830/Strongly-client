@@ -242,12 +242,14 @@ class AddNew extends Component {
               <div className="AddNew__ExerciseHeader">
                 <input
                   className='AddNew_ExerciseName'
+                  title="This field is required"
                   placeholder='Squat'
                   type="text"
                   name='exercise-name'
                   value={ex.title}
                   onChange={e => this.updateExerciseName(e.target.value, index)}
                   required
+                  pattern=".*\S+.*"
                 />
                 <RemoveCircleIcon className="AddNew__RemoveButton" onClick={e => this.handleRemoveExercise(e, ex.id)}/>
               </div>
@@ -284,6 +286,7 @@ class AddNew extends Component {
                     name='set-reps'
                     value={set.reps}
                     onChange={e => this.updateSetReps(e.target.value, set.id)}
+                    min='1'
                     required
                   /></td>
                   <td><input
@@ -291,6 +294,7 @@ class AddNew extends Component {
                     name='set-weight'
                     value={set.weight}
                     onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
+                    min='1'
                     required
                   /></td>
                   <td>

@@ -93,8 +93,8 @@ class WorkoutPage extends React.Component {
                 </div>
 
                 <div className="WorkoutPage__buttons">
-                  <Link to={`${workoutId}/edit`}><button className="WorkoutPage__button">Edit</button></Link>
-                  <button className="WorkoutPage__button" type='button' onClick={e => window.confirm("Are you sure?") && this.handleDelete(e)}>Delete</button>
+                  <Link to={`${workoutId}/edit`}><button className="WorkoutPage__button WorkoutPage__Button-blue">Edit</button></Link>
+                  <button className="WorkoutPage__button WorkoutPage__Button-red" type='button' onClick={e => window.confirm("Are you sure?") && this.handleDelete(e)}>Delete</button>
                 </div>
             </div>
         }

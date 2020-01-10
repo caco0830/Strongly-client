@@ -81,11 +81,9 @@ export default class Nav extends React.Component{
                             onClick={this.handleLogoutClick}>
                                 <ExitToAppIcon/> Logout
                         </Link>
-                        
                     </div>
                     <div className='Header__menu-items-background'></div>
                 </div>
-            
         );
     }
 
