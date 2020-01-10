@@ -3,6 +3,11 @@ import AppContext from '../../AppContext';
 import {Link} from 'react-router-dom';
 import TokenService from '../../services/token-service';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
+
 import './Nav.css';
 
 export default class Nav extends React.Component{
@@ -42,19 +47,19 @@ export default class Nav extends React.Component{
                     className="menu-item" 
                     to='/home'
                     onClick={this.handleLinkClick}>
-                        Home
+                        <HomeIcon/> Home
                 </Link>
                 <Link
                     className="menu-item" 
                     to='/register'
                     onClick={this.handleLinkClick}>
-                        Register
+                        <NoteAddIcon/> Register
                 </Link>
                 <Link
                     className="menu-item" 
                     to='/login'
                     onClick={this.handleLinkClick}>
-                        Login
+                        <VpnKeyIcon/> Login
                 </Link>
             </div>
         );
@@ -68,13 +73,13 @@ export default class Nav extends React.Component{
                             className="menu-item" 
                             to='/home'
                             onClick={this.handleLinkClick}>
-                                Home
+                                <HomeIcon/> Home
                         </Link>
                         <Link
                             className="menu-item" 
                             to='/'
                             onClick={this.handleLogoutClick}>
-                                Logout
+                                <ExitToAppIcon/> Logout
                         </Link>
                         
                     </div>

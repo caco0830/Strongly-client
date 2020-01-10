@@ -239,16 +239,18 @@ class AddNew extends Component {
           return (
             <div key={`ex-${index}`} className='AddNew__exercises-entry'>
               {/* <label htmlFor='exercise-name'>Exercise Name: </label> */}
-              <input
-                className='AddNew_ExerciseName'
-                placeholder='Squat'
-                type="text"
-                name='exercise-name'
-                value={ex.title}
-                onChange={e => this.updateExerciseName(e.target.value, index)}
-                required
-              />
-              <button onClick={e => this.handleRemoveExercise(e, ex.id)}>Remove</button>
+              <div className="AddNew__ExerciseHeader">
+                <input
+                  className='AddNew_ExerciseName'
+                  placeholder='Squat'
+                  type="text"
+                  name='exercise-name'
+                  value={ex.title}
+                  onChange={e => this.updateExerciseName(e.target.value, index)}
+                  required
+                />
+                <RemoveCircleIcon className="AddNew__RemoveButton" onClick={e => this.handleRemoveExercise(e, ex.id)}/>
+              </div>
               {this.renderSets(sets, ex.id)}
             </div>
           );
@@ -261,43 +263,86 @@ class AddNew extends Component {
   renderSets(sets, exerciseId) {
     //sets = sets.filter(set => set.exercise_id === exerciseId);
     sets = getSets(sets, exerciseId);
-
     return (
-      <div className='AddNew__sets-list'>
-        <div className='AddNew__sets-headers'>
-          <div>Set</div>
-          <div>Reps</div>
-          <div>Lbs</div>
-          <div>Actions</div>
-        </div>
+      <table className='AddNew__sets-list'>
+        <thead>
+          <tr className='AddNew__sets-headers'>
+            <th>Set</th>
+            <th>Reps</th>
+            <th>Lbs</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
         {
           sets.map((set, index) => {
             return (
-              <div key={`set-${set.id}`} className='AddNew__sets-entry'>
-                <div>{index + 1}</div>
-                <input
-                  type='number'
-                  name='set-reps'
-                  value={set.reps}
-                  onChange={e => this.updateSetReps(e.target.value, set.id)}
-                  required
-                />
-                <input
-                  type='number'
-                  name='set-weight'
-                  value={set.weight}
-                  onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
-                  required
-                />
-
-                <button onClick={e => this.handleRemoveSet(e, set.id)}>Remove</button>
-              </div>
+                <tr key={`set-${set.id}`} className='AddNew__sets-entry'>
+                  <td>{index + 1}</td>
+                  <td><input
+                    type='number'
+                    name='set-reps'
+                    value={set.reps}
+                    onChange={e => this.updateSetReps(e.target.value, set.id)}
+                    required
+                  /></td>
+                  <td><input
+                    type='number'
+                    name='set-weight'
+                    value={set.weight}
+                    onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
+                    required
+                  /></td>
+                  <td>
+                    <RemoveCircleIcon className="AddNew__RemoveButton" onClick={e => this.handleRemoveSet(e, set.id)}/>
+                  </td>
+                </tr>
             );
           })
         }
-        <button data-exerciseid={exerciseId} id="new" onClick={this.addSet}>+ Add Set</button>
-      </div>
+          <tr>
+            <td>
+              <button className="AddNew__Button-blue AddNew__AddSet" data-exerciseid={exerciseId} id="new" onClick={this.addSet}>+ Add Set</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     );
+    // return (
+    //   <div className='AddNew__sets-list'>
+    //     <div className='AddNew__sets-headers'>
+    //       <div>Set</div>
+    //       <div>Reps</div>
+    //       <div>Lbs</div>
+    //       <div>Actions</div>
+    //     </div>
+    //     {
+    //       sets.map((set, index) => {
+    //         return (
+    //           <div key={`set-${set.id}`} className='AddNew__sets-entry'>
+    //             <div>{index + 1}</div>
+    //             <input
+    //               type='number'
+    //               name='set-reps'
+    //               value={set.reps}
+    //               onChange={e => this.updateSetReps(e.target.value, set.id)}
+    //               required
+    //             />
+    //             <input
+    //               type='number'
+    //               name='set-weight'
+    //               value={set.weight}
+    //               onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
+    //               required
+    //             />
+    //             <RemoveCircleIcon className="AddNew__RemoveButton" onClick={e => this.handleRemoveSet(e, set.id)}/>
+    //           </div>
+    //         );
+    //       })
+    //     }
+    //     <button data-exerciseid={exerciseId} id="new" onClick={this.addSet}>+ Add Set</button>
+    //   </div>
+    // );
   }
 
   render() {

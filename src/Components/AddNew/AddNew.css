@@ -103,13 +103,58 @@ form{
     color: black;
 }
 
-
-
-
 .AddNew__sets-entry input{
     width: 70px;
 }
 
 .AddNew__exercises-entry {
     margin-top: 20px;
+}
+
+.AddNew__RemoveButton:hover{
+    cursor: pointer;
+}
+
+.AddNew__ExerciseHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* .AddNew__sets-list{
+    display: table;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.AddNew__sets-headers > *, .AddNew__sets-entry > *{
+    display: table-row;
+    border: 1px solid black;
+} */
+
+.AddNew__sets-list{
+    width: 100%;
+}
+
+.AddNew__sets-list th{
+    font-weight: normal;
+}
+
+.AddNew__sets-list tr{
+    text-align: center;
+}
+
+.AddNew__sets-list td{
+    width: 24%;
+    text-align: center;
+}
+
+.AddNew__sets-entry input{
+    width: 45px;
+}
+
+
+input[type=number] {
+    -moz-appearance:textfield;
 }
