@@ -25,11 +25,12 @@ class ListPage extends Component {
                 {
                     this.context.loading
                         ? <Loader />
-                        : <div>
+                        : <div className='ListPage__container'>
                             <Link to='/addNew'>
                                 <div className="ListPage__addNew">ADD NEW WORKOUT</div>
                             </Link>
-                            {this.renderWorkouts()}</div>
+                            {this.renderWorkouts()}
+                            </div>
                 }
             </div>
         );

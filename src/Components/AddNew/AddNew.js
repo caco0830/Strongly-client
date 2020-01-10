@@ -7,6 +7,9 @@ import Loader from '../Loader/Loader';
 import { getWorkoutById, createWorkout, updateWorkout } from '../../services/workoutAPI';
 import { getExercisesByWorkoutId, createExercises, updateExercises, deleteExercises } from '../../services/exercisesAPI';
 import { getSetsByWorkoutId, createSets, updateSets, deleteSets } from '../../services/setsAPI';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+
+
 
 class AddNew extends Component {
 
@@ -235,8 +238,9 @@ class AddNew extends Component {
         {exercises.map((ex, index) => {
           return (
             <div key={`ex-${index}`} className='AddNew__exercises-entry'>
-              <label htmlFor='exercise-name'>Exercise Name: </label>
+              {/* <label htmlFor='exercise-name'>Exercise Name: </label> */}
               <input
+                className='AddNew_ExerciseName'
                 placeholder='Squat'
                 type="text"
                 name='exercise-name'
@@ -249,7 +253,7 @@ class AddNew extends Component {
             </div>
           );
         })}
-        <button onClick={this.addExercise}>+ Add Exercise</button>
+        <button className="AddNew__Button-blue AddNew__AddEx" onClick={this.addExercise}>ADD EXERCISE</button>
       </div>
     );
   }
@@ -305,17 +309,22 @@ class AddNew extends Component {
           this.context.loading
             ? <Loader />
             : <div className='AddNew__workout'>
-              <label htmlFor="name">Name: </label>
+              {/* <label htmlFor="name">Name: </label> */}
               <input
+                className="AddNew__NameInput"
                 type="text"
                 name="name"
                 value={this.state.workout.title}
+                placeholder="Workout Name"
                 onChange={e => this.nameChange(e.target.value)}
                 required
               />
+              <div className='AddNew__Divider'></div>
               {this.renderExercises(exercises)}
-              <button type="submit">Save</button>
-              <button type="cancel" onClick={this.handleCancel}>Cancel</button>
+              <div className='AddNew__Buttons'>
+                <button className="AddNew__Button-blue AddNew__Submit" type="submit">Save</button>
+                <button className="AddNew__Button-red AddNew__Cancel" type="cancel" onClick={this.handleCancel}>Cancel</button>
+              </div>
             </div>
         }
       </form >
