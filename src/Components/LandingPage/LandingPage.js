@@ -55,7 +55,6 @@ class LandingPage extends Component{
                 <div className='LandingPage__Workout LandingPage__screenshot'>
                     <p>Add Wokrouts</p>
                     <img className='LandingPage__screenshot_image' src={require('./assets/workoutIcon.png')} alt='workout screenshot'></img>
-                    <p>Add Wokrouts</p>
                 </div>
                 <div className='LandingPage__Exercise LandingPage__screenshot'>
                     <p>Add Exercises</p>

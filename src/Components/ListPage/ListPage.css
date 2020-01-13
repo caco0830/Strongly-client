@@ -26,3 +26,18 @@
     font-size: 14px;
     letter-spacing: 0.75px;
 }
+
+@media only screen and (min-width: 1080px){
+
+    .ListPage__containerList{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        padding-left: 25px;
+        padding-right: 25px;
+        margin: auto;
+
+        max-width: 1080px;
+    }
+}

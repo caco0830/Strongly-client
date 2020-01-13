@@ -13,9 +13,13 @@ class ListPage extends Component {
         let workouts = this.context.workouts;
 
         return (
-            workouts.map(workout => {
-                return <WorkoutCard key={workout.id} workout={workout}></WorkoutCard>
-            })
+            <div className='ListPage__containerList'>
+            {
+                workouts.map(workout => {
+                    return <WorkoutCard key={workout.id} workout={workout}></WorkoutCard>
+                })
+            }
+            </div>
         );
     }
 

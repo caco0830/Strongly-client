@@ -7,7 +7,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
-
 import './Nav.css';
 
 export default class Nav extends React.Component{
@@ -88,17 +87,35 @@ export default class Nav extends React.Component{
     }
 
     render(){
-        return(
-            <div>
-                <nav className='Header'>
-                    <MenuIcon onClick={() => this.handleMenuClick()} className='menu-icon Header__child'/>
- 
-                    <Link className='Header__child' to='/' onClick={this.handleLinkClick}>
-                        <p>Strongly</p>
-                    </Link>
-                </nav>
-                {this.state.menuOpen ? this.renderMenu() : ''}
-            </div>
-        );
+        let width = window.innerWidth;
+        console.log(width);
+        if(width < 1080){
+            return(
+                <div>
+                    <nav className='Header'>
+                        <MenuIcon onClick={() => this.handleMenuClick()} className='menu-icon Header__child'/>
+     
+                        <Link className='Header__child' to='/' onClick={this.handleLinkClick}>
+                            <p>Strongly</p>
+                        </Link>
+                    </nav>
+                    {this.state.menuOpen ? this.renderMenu() : ''}
+                </div>
+            );
+        }else{
+            return(
+                <div>
+                    <nav className='Header'>
+                        
+     
+                        <Link className='Header__child' to='/' onClick={this.handleLinkClick}>
+                            <p>Strongly</p>
+                        </Link>
+                        {this.renderMenu()}
+                    </nav>
+                    {/* {this.state.menuOpen ? this.renderMenu() : ''} */}
+                </div>
+                );
+        }
     }
 }
