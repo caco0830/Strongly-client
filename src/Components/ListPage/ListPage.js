@@ -11,7 +11,7 @@ class ListPage extends Component {
 
     renderWorkouts() {
         let workouts = this.context.workouts;
-
+        //creates cards from every workout in the context.
         return (
             <div className='ListPage__containerList'>
             {

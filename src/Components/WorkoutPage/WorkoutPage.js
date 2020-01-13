@@ -19,6 +19,8 @@ class WorkoutPage extends React.Component {
     confirmDelete: false
   }
 
+
+  //makes a call when the component is monted to load workouts, exercises and sets and adds them to the state
   async componentDidMount() {
 
     this.context.isLoading();
@@ -37,6 +39,7 @@ class WorkoutPage extends React.Component {
     });
   }
 
+  //deletes the workout from the database 
   handleDelete = async (e) => {
     e.preventDefault();
     const workout = this.state.workout;

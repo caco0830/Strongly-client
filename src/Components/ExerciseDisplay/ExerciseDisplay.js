@@ -7,6 +7,7 @@ import './ExerciseDisplay.css';
 class ExerciseDisplay extends React.Component{
     static contextType = AppContext;
 
+    //will render exercises if they exist or will display a blank title if it doesn't.
     getExercises(){
         let exercises = this.context.exercises;
         let sets = this.context.sets;
@@ -39,8 +40,6 @@ class ExerciseDisplay extends React.Component{
             </div>
         );
     }
-
-
 }
 
 export default ExerciseDisplay;

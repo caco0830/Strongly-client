@@ -24,9 +24,19 @@ class App extends Component {
     workouts: [],
     exercises: [],
     sets: [],
-    loading: true
+    loading: true,
+    windowSize: null
   }
-  //move initial calls to ListPage or the call can only be made if user is logged in.
+
+  handleResize = e => {
+    const windowSize = window.innerWidth;
+    
+    this.setState(prevState => {
+      return {
+        windowSize
+      }
+    });
+  }
 
 
   async componentDidMount() {
@@ -36,8 +46,14 @@ class App extends Component {
       const exercises = await getAllExercises();
       const sets = await getAllSets();
 
+      window.addEventListener("resize", this.handleResize);
+
       this.setState({ workouts, exercises, sets, loading: false });
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
   }
 
   handleAddWorkout = workout => {
@@ -121,7 +137,8 @@ class App extends Component {
       onLoginSuccess: this.onLoginSuccess,
       isLoading: this.isLoading,
       hasLoaded: this.hasLoaded,
-      loading: this.state.loading
+      loading: this.state.loading,
+      windowSize: this.state.windowSize
     }
 
     return (

@@ -10,6 +10,7 @@ class LoginPage extends Component{
 
     state = {error: null}
 
+    //will create a JWT token and stores it in local storage when a user signs in.
     handleSubmitJwtAuth = ev => {
         ev.preventDefault();
         this.setState({error: null});

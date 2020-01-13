@@ -4,8 +4,11 @@ import AuthApiService from '../../services/authAPI';
 
 class RegistrationForm extends Component{
 
-    state = {error: null}
+    state = {
+        error: null
+    }
 
+    //created the user if all information is filled.
     handleSubmit = ev => {
         ev.preventDefault();
         const {fullname, username, password} = ev.target;

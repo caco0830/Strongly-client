@@ -132,17 +132,6 @@ form{
     align-items: center;
 }
 
-/* .AddNew__sets-list{
-    display: table;
-    width: 100%;
-    border: 1px solid black;
-}
-
-.AddNew__sets-headers > *, .AddNew__sets-entry > *{
-    display: table-row;
-    border: 1px solid black;
-} */
-
 .AddNew__sets-list{
     width: 100%;
 }

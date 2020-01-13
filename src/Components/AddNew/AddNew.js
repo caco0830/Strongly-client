@@ -9,8 +9,6 @@ import { getExercisesByWorkoutId, createExercises, updateExercises, deleteExerci
 import { getSetsByWorkoutId, createSets, updateSets, deleteSets } from '../../services/setsAPI';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
-
-
 class AddNew extends Component {
 
   static contextType = AppContext;
@@ -31,6 +29,7 @@ class AddNew extends Component {
     }
   }
 
+  //pre-fill any fields if there is a workout Id present in the url, otherwise show all balnk on all fields.
   async componentDidMount() {
     if (this.props.match.params.workoutId) {
       this.context.isLoading();
@@ -47,6 +46,7 @@ class AddNew extends Component {
     }
   }
 
+  //update the workout name on the state
   nameChange(name) {
     let workout = this.state.workout;
     workout.title = name;
@@ -55,6 +55,7 @@ class AddNew extends Component {
     });
   }
 
+  //update the exercise name on the state
   updateExerciseName(title, index) {
     const exercises = this.state.exercises;
     exercises[index].title = title;
@@ -64,6 +65,7 @@ class AddNew extends Component {
     });
   }
 
+  //update the weight on the set for each set
   updateSetWeight(weight, id) {
     const sets = this.state.sets;
     sets[sets.findIndex(set => set.id === id)].weight = weight;
@@ -73,6 +75,7 @@ class AddNew extends Component {
     });
   }
 
+  //update reps on the state
   updateSetReps(reps, id) {
     const sets = this.state.sets;
     sets[sets.findIndex(set => set.id === id)].reps = reps;
@@ -82,6 +85,7 @@ class AddNew extends Component {
     });
   }
 
+  //on submit create any new items and update any that need to be updated
   handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -95,6 +99,7 @@ class AddNew extends Component {
     await this.props.history.push('/home');
   }
 
+  //created workout on the database
   async postWorkout() {
 
     const workout = this.state.workout;
@@ -103,12 +108,14 @@ class AddNew extends Component {
     this.context.addWorkout(newWorkout);
   }
 
+  //will update the workout on the database
   async patchWorkouts() {
     const workout = this.state.workout;
     await updateWorkout(workout);
     this.context.addWorkout(workout);
   }
 
+  //will create or update an exercise on the database
   async upsertExercises() {
     const exercises = this.state.exercises;
     const workoutId = this.props.match.params.workoutId;
@@ -143,6 +150,7 @@ class AddNew extends Component {
     }
   }
 
+  //will create or update a set on the database
   async upsertSets() {
     const sets = this.state.sets;
     const workoutId = this.props.match.params.workoutId;
@@ -178,10 +186,12 @@ class AddNew extends Component {
     }
   }
 
+  //cancel will redirect to home
   handleCancel = (e) => {
     this.props.history.push('/home');
   }
 
+  //created a new exercise on the state exercise array with isNew set to true
   addExercise = (e) => {
 
     e.preventDefault();
@@ -193,6 +203,7 @@ class AddNew extends Component {
     });
   }
 
+  //created a new set on the state set array with isNew set to true
   addSet = (e) => {
     e.preventDefault();
     const exerciseid = e.target.dataset.exerciseid
@@ -204,6 +215,7 @@ class AddNew extends Component {
     });
   }
 
+  //removes a set from the state and context
   async handleRemoveSet(e, setId) {
     e.preventDefault();
     const workoutId = this.props.match.params.workoutId;
@@ -218,6 +230,7 @@ class AddNew extends Component {
     this.context.addSet(sets, workoutId);
   }
 
+  //removes an exercise from the state and context
   async handleRemoveExercise(e, exId) {
     e.preventDefault();
     const workoutId = this.props.match.params.workoutId;
@@ -263,7 +276,6 @@ class AddNew extends Component {
   }
 
   renderSets(sets, exerciseId) {
-    //sets = sets.filter(set => set.exercise_id === exerciseId);
     sets = getSets(sets, exerciseId);
     return (
       <table className='AddNew__sets-list'>

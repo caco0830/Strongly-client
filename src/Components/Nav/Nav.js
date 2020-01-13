@@ -23,11 +23,12 @@ export default class Nav extends React.Component{
         const open = this.state.menuOpen ? false:true;
         this.setState({menuOpen: open});
     }
-
+    //closes the side menu on mobile when login is clicked.
     handleLinkClick = () => {
         this.setState({menuOpen: false});
     }
 
+    //clears the token from storage and closes the side menu
     handleLogoutClick = () => {
         TokenService.clearAuthToken();
         this.context.onLogoutSuccess();
@@ -87,14 +88,12 @@ export default class Nav extends React.Component{
     }
 
     render(){
-        let width = window.innerWidth;
-        console.log(width);
+        let width = this.context.windowSize;
         if(width < 1080){
             return(
                 <div>
                     <nav className='Header'>
                         <MenuIcon onClick={() => this.handleMenuClick()} className='menu-icon Header__child'/>
-     
                         <Link className='Header__child' to='/' onClick={this.handleLinkClick}>
                             <p>Strongly</p>
                         </Link>
@@ -106,14 +105,11 @@ export default class Nav extends React.Component{
             return(
                 <div>
                     <nav className='Header'>
-                        
-     
                         <Link className='Header__child' to='/' onClick={this.handleLinkClick}>
                             <p>Strongly</p>
                         </Link>
                         {this.renderMenu()}
                     </nav>
-                    {/* {this.state.menuOpen ? this.renderMenu() : ''} */}
                 </div>
                 );
         }

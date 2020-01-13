@@ -12,5 +12,6 @@ export default React.createContext({
     onLoginSuccess: () => {},
     isLoading: () => {},
     hasLoaded: () => {},
-    loading: null
+    loading: null,
+    windowSize: null
 });
