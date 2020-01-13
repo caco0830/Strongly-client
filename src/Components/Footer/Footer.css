@@ -9,6 +9,11 @@
     margin-top: 30px;
 }
 
+.Footer a{
+    color: inherit;
+    text-decoration: none;
+}
+
 .Footer__MailIcon{
     margin-top: 5px;
 }

@@ -12,6 +12,7 @@ class LandingPage extends Component{
     
     demoLogin = ev => {
         ev.preventDefault();
+        this.context.isLoading();
 
         this.setState({error: null});
         const username = 'admin';
@@ -24,12 +25,10 @@ class LandingPage extends Component{
         .then(res => {
             TokenService.saveAuthToken(res.authToken);
             this.context.onLoginSuccess();
+            this.context.hasLoaded();
             this.props.history.push('/home');
 
         })
-        // .catch(res => {
-        //     this.setState({error: res.error});
-        // })
         .catch(res => {
             console.error(res.error);
         });
@@ -37,28 +36,39 @@ class LandingPage extends Component{
 
     render(){
         return (
-        <main className='mainpage'>
-            <h2>Get Stronger!</h2>
-            <button onClick={this.demoLogin}>Demo</button>
-            <section>
-                <header className='banner'><h3>Keep a workout log</h3></header>
-                <p>[placeholder for screenshot of home page]</p>
-                <p>Workout tracker and log for strength training.</p>
+        <main className='LandingPage'>
+            <section className='LandingPage__Hero'>
+                <div className='LandingPage_HeroContainer'>
+                    
+                    <div className='LandingPage__HeroContent'>
+                        <h1 className='LandingPage__HeroPhrase'>Track your progress to get stronger!</h1>
+                        <div className='LandingPage__HeroContent-text'>
+                            <p>Take the guestwork out of your training and record your workouts to properly plan the next sessions to help you improve your progress.</p>
+                        </div>
+                    </div>
+                    <div className='LandingPage__Demo'>
+                            <button className='LandingPage__DemoButton'onClick={this.demoLogin}>Click here to try it!</button>
+                        </div>
+                </div>
             </section>
-            <section>
-                <header className='banner'><h3>Plan ahead</h3></header>
-                <p>[placeholder for screenshot of screen to create workout]</p>
-                <p>Plan your workouts to prevent any guessing in the gym.</p>
-            </section>
-            <section>
-                <header className='banner'><h3>Set up routines</h3></header>
-                <p>[placeholder for screenshot of screen to create routines]</p>
-                <p>Create routines and spicify the weight and set increments from one workout to another.</p>
+            <section className='LandingPage__Body'>
+                <div className='LandingPage__Workout LandingPage__screenshot'>
+                    <p>Add Wokrouts</p>
+                    <img className='LandingPage__screenshot_image' src={require('./assets/workoutIcon.png')} alt='workout screenshot'></img>
+                    <p>Add Wokrouts</p>
+                </div>
+                <div className='LandingPage__Exercise LandingPage__screenshot'>
+                    <p>Add Exercises</p>
+                    <img className='LandingPage__screenshot_image' src={require('./assets/exerciseIcon.png')} alt='workout screenshot'></img>
+                </div>
+                <div className='LandingPage__Sets LandingPage__screenshot'>
+                    <p>Add Sets</p>
+                    <img className='LandingPage__screenshot_image' src={require('./assets/setIcon.png')} alt='workout screenshot'></img>
+                </div>
             </section>
         </main>
         );
     }
-
 }
 
 export default LandingPage;

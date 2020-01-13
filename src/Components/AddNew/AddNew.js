@@ -257,7 +257,7 @@ class AddNew extends Component {
             </div>
           );
         })}
-        <button className="AddNew__Button-blue AddNew__AddEx" onClick={this.addExercise}>ADD EXERCISE</button>
+        <button className="AddNew__Button-blue AddNew__AddEx" onClick={this.addExercise}>Add Exercise</button>
       </div>
     );
   }
@@ -306,47 +306,13 @@ class AddNew extends Component {
         }
           <tr>
             <td>
-              <button className="AddNew__Button-blue AddNew__AddSet" data-exerciseid={exerciseId} id="new" onClick={this.addSet}>+ Add Set</button>
+              <button className="AddNew__Button-blue AddNew__AddSet" data-exerciseid={exerciseId} id="new" onClick={this.addSet}>Add Set</button>
             </td>
           </tr>
         </tbody>
       </table>
     );
-    // return (
-    //   <div className='AddNew__sets-list'>
-    //     <div className='AddNew__sets-headers'>
-    //       <div>Set</div>
-    //       <div>Reps</div>
-    //       <div>Lbs</div>
-    //       <div>Actions</div>
-    //     </div>
-    //     {
-    //       sets.map((set, index) => {
-    //         return (
-    //           <div key={`set-${set.id}`} className='AddNew__sets-entry'>
-    //             <div>{index + 1}</div>
-    //             <input
-    //               type='number'
-    //               name='set-reps'
-    //               value={set.reps}
-    //               onChange={e => this.updateSetReps(e.target.value, set.id)}
-    //               required
-    //             />
-    //             <input
-    //               type='number'
-    //               name='set-weight'
-    //               value={set.weight}
-    //               onChange={e => this.updateSetWeight(e.target.value, set.id, index)}
-    //               required
-    //             />
-    //             <RemoveCircleIcon className="AddNew__RemoveButton" onClick={e => this.handleRemoveSet(e, set.id)}/>
-    //           </div>
-    //         );
-    //       })
-    //     }
-    //     <button data-exerciseid={exerciseId} id="new" onClick={this.addSet}>+ Add Set</button>
-    //   </div>
-    // );
+    
   }
 
   render() {
@@ -361,11 +327,13 @@ class AddNew extends Component {
               {/* <label htmlFor="name">Name: </label> */}
               <input
                 className="AddNew__NameInput"
+                title="A value is required"
                 type="text"
                 name="name"
                 value={this.state.workout.title}
                 placeholder="Workout Name"
                 onChange={e => this.nameChange(e.target.value)}
+                pattern=".*\S+.*"
                 required
               />
               <div className='AddNew__Divider'></div>

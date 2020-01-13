@@ -27,7 +27,7 @@ class ListPage extends Component {
                         ? <Loader />
                         : <div className='ListPage__container'>
                             <Link to='/addNew'>
-                                <div className="ListPage__addNew">ADD NEW WORKOUT</div>
+                                <div className="ListPage__addNew">Add New Workout</div>
                             </Link>
                             {this.renderWorkouts()}
                             </div>
