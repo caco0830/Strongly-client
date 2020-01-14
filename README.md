@@ -47,6 +47,7 @@ I built this app because I have always looked for what, to me, would be the perf
 - Node.js
 - Express.js
 - Mocha + Chai
+- PostgreSQL
 
 ## Features
 You are able to log workouts including which exercises where done and how many sets. Each set can have different number of repetitions and different weight. 
