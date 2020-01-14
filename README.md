@@ -4,6 +4,14 @@ Live Link: [App](https://build.caco0830.now.sh/) <br />
 
 Keep track of all your workouts, including which exercises were performed and the amount of sets.
 
+## Screenshots
+
+![alt text](https://raw.githubusercontent.com/caco0830/Strongly-client/master/src/Components/LandingPage/assets/workoutIcon.png "Logo Title Text 1")
+
+![alt text](https://raw.githubusercontent.com/caco0830/Strongly-client/master/src/Components/LandingPage/assets/exerciseIcon.png "Logo Title Text 1")
+
+![alt text](https://raw.githubusercontent.com/caco0830/Strongly-client/master/src/Components/LandingPage/assets/setIcon.png "Logo Title Text 1")
+
 ## How to use?
 1. Click on the hamburger menu on the top right and register to create an account.
 2. Log in using the created account.
@@ -26,22 +34,25 @@ To delete:
 
 
 ## Motivation
+I built this app because I have always looked for what, to me, would be the perfect siempre app to keep a workout history. Most tend to have too many features and tend to get complicated.
 
 ## Build Status
 
-## Code Style
-
 ## Screenshots
 
-## Tech/framework used
+## Technology
+### Front End
+- HTML
+- CSS
+- JavaScript
+- React.js
+
+### Back End
+- Node.js
+- Express.js
+- Mocha + Chai
 
 ## Features
+You are able to log workouts including which exercises where done and how many sets. Each set can have different number of repetitions and different weight. 
 
-## Code Example
-
-## Installation
-
-## API Reference
-
-## Tests
 

@@ -25,7 +25,7 @@ class App extends Component {
     exercises: [],
     sets: [],
     loading: true,
-    windowSize: null
+    windowSize: window.innerWidth
   }
 
   handleResize = e => {
