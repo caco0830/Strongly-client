@@ -28,13 +28,8 @@ To delete:
 2. Click on the workout to be edited.
 3. Click 'delete'
 
-
 ## Motivation
 I built this app because I have always looked for what, to me, would be the perfect siempre app to keep a workout history. Most tend to have too many features and tend to get complicated.
-
-## Build Status
-
-## Screenshots
 
 ## Technology
 ### Front End
