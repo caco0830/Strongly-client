@@ -6,11 +6,7 @@ Keep track of all your workouts, including which exercises were performed and th
 
 ## Screenshots
 
-![alt text](https://raw.githubusercontent.com/caco0830/Strongly-client/master/src/Components/LandingPage/assets/workoutIcon.png "Logo Title Text 1")
-
-![alt text](https://raw.githubusercontent.com/caco0830/Strongly-client/master/src/Components/LandingPage/assets/exerciseIcon.png "Logo Title Text 1")
-
-![alt text](https://raw.githubusercontent.com/caco0830/Strongly-client/master/src/Components/LandingPage/assets/setIcon.png "Logo Title Text 1")
+![Screenshot of application](https://raw.githubusercontent.com/caco0830/Strongly-client/master/src/assets/screenshot.png "App Screenshot")
 
 ## How to use?
 1. Click on the hamburger menu on the top right and register to create an account.
