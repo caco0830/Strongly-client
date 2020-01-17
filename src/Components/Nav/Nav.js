@@ -15,7 +15,17 @@ export default class Nav extends React.Component{
         super(props);
         this.state = {
             menuOpen:false,
+            mobileMenu: false
         }
+    }
+
+    componentDidMount(){
+        window.addEventListener('resize', this.resize.bind(this));
+        this.resize();
+    }
+
+    resize(){
+        this.setState({mobileMenu: window.innerWidth < 1080});
     }
 
     //sets the openMenu state to true or false to display the drop down menu
@@ -88,8 +98,8 @@ export default class Nav extends React.Component{
     }
 
     render(){
-        let width = this.context.windowSize;
-        if(width < 1080){
+        //let width = this.context.windowSize;
+        if(this.state.mobileMenu){
             return(
                 <div>
                     <nav className='Header'>
