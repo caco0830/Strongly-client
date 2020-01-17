@@ -39,20 +39,21 @@ class RegistrationForm extends Component{
                 <div role='alert'>
                     {error && <p className='red'>{error}</p>}
                 </div>
+                <h2 className="RegistrationForm__Title">Register</h2>
                 <div>
                     <label htmlFor="RegistrationForm_fullname">Full Name </label>
-                    <input name='fullname'id='RegistrationForm_fullname' type="text" required/>
+                    <input className="RegistrationForm__textBox" name='fullname'id='RegistrationForm_fullname' type="text" required/>
                 </div>
                 <div>
                     <label htmlFor="RegistrationForm_username">Username </label>
-                    <input name='username' type="text" id='RegistrationForm_username' required/>
+                    <input className="RegistrationForm__textBox" name='username' type="text" id='RegistrationForm_username' required/>
                 </div>
                 <div>
                     <label htmlFor="RegistrationForm_password">Password </label>
-                    <input name='password' type="password" id="RegistrationForm_password" required/>
+                    <input className="RegistrationForm__textBox" name='password' type="password" id="RegistrationForm_password" required/>
                 </div>
 
-                <button type="submit">Register</button>
+                <button className="RegistrationForm__Button-blue" type="submit">Register</button>
             </form>
         );
     }

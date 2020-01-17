@@ -36,19 +36,22 @@ class LoginPage extends Component{
         const {error} = this.state;
         return (
             <form onSubmit={this.handleSubmitJwtAuth}>
+                <h2 className="Login__Title">Login</h2>
+
+
                 <div role='alert'>
                     {error && <p className='red'>{error}</p>}
                 </div>
                 <div>
-                    <label htmlFor="username">Username</label>
-                    <input placeholder="email@example.com" type="text" name='username' />
+                    <label htmlFor="username">Username </label>
+                    <input className="Login__textBox" placeholder="email@example.com" type="text" name='username' />
                 </div>
                 <div>
-                    <label htmlFor="password">Password</label>
-                    <input placeholder="******" type="password" name="password" />
+                    <label htmlFor="password">Password </label>
+                    <input className="Login__textBox" placeholder="******" type="password" name="password" />
                 </div>
 
-                <button type="submit">Log in</button>
+                <button className="Login__Button-blue" type="submit">Log in</button>
 
                 <div>
                     <p>No account yet? <Link to='/register'>Sign up</Link></p>
