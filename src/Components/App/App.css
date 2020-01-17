@@ -3,6 +3,10 @@ html, body {
     position: relative;
 }
 
+main{
+    margin-bottom: 40px;
+}
+
 .App__header{
     display: flex;
     flex-direction: column;

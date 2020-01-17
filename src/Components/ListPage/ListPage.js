@@ -36,7 +36,9 @@ class ListPage extends Component {
                             {this.renderWorkouts()}
                             </div>
                 }
+                
             </div>
+            
         );
     }
 }
