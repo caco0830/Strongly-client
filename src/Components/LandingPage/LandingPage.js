@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import AppContext from '../../AppContext';
 import AuthApiService from '../../services/authAPI';
 import TokenService from '../../services/token-service';
+import Loader from '../Loader/Loader';
 import './LandingPage.css';
 
 class LandingPage extends Component{
@@ -37,6 +38,15 @@ class LandingPage extends Component{
     render(){
         return (
         <main className='LandingPage'>
+            {
+            
+                this.context.loading
+                ? <Loader className='LandingPage__Loader'/>
+                :
+            
+
+
+                <div>
             <section className='LandingPage__Hero'>
                 <div className='LandingPage_HeroContainer'>
                     
@@ -65,6 +75,8 @@ class LandingPage extends Component{
                     <img className='LandingPage__screenshot_image' src={require('./assets/setIcon.png')} alt='workout screenshot'></img>
                 </div>
             </section>
+            </div>
+    }
         </main>
         );
     }
