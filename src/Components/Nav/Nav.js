@@ -1,6 +1,6 @@
 import React from 'react';
 import AppContext from '../../AppContext';
-import {Link} from 'react-router-dom';
+import {Link, Router} from 'react-router-dom';
 import TokenService from '../../services/token-service';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
@@ -103,6 +103,7 @@ export default class Nav extends React.Component{
             return(
                 <div>
                     <nav className='Header'>
+                        
                         <MenuIcon onClick={() => this.handleMenuClick()} className='menu-icon Header__child'/>
                         <Link className='Header__child' to='/' onClick={this.handleLinkClick}>
                             <p>Strongly</p>
